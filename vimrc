@@ -18,7 +18,6 @@ set cindent
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
-" set noexpandtab
 set expandtab
 
 set foldmethod=marker
@@ -34,8 +33,10 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
 Plug 'majutsushi/tagbar'  " , { 'on':  'TagbarToggle'}
+Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 
 
+Plug 'chrisbra/vim-diff-enhanced'
 Plug 'tpope/vim-fugitive'
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
@@ -48,7 +49,7 @@ Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
 " personal modified
 Plug '~/.vim/plugged/papercolor-theme'
 
-" Add plugins to &runtimepath
+" Add plug-in to &runtimepath
 call plug#end()
 " }}}
 
