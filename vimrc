@@ -21,8 +21,35 @@ set softtabstop=2
 " set noexpandtab
 set expandtab
 
-
 set foldmethod=marker
+
+
+" plug-in management {{{
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
+Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
+
+
+Plug 'tpope/vim-fugitive'
+Plug 'Konfekt/FastFold'
+Plug 'scrooloose/nerdcommenter'
+
+Plug 'easymotion/vim-easymotion'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
+
+" personal modified
+Plug '~/.vim/plugged/papercolor-theme'
+
+" Add plugins to &runtimepath
+call plug#end()
+" }}}
 
 " turn syntax highlighting on
 set t_Co=256
@@ -119,6 +146,7 @@ if &diff
   map <M-Right> dp
 else
   " spell settings
+  set spell
   :setlocal spell spelllang=en
   " set the spellfile - folders must exist
   set spellfile=~/.vim/spellfile.add
@@ -146,31 +174,6 @@ set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
 
 
-" plug-in management {{{
-call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-
-
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
-Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
-
-
-Plug 'tpope/vim-fugitive'
-Plug 'Konfekt/FastFold'
-Plug 'scrooloose/nerdcommenter'
-Plug 'NLKNguyen/papercolor-theme'
-
-Plug 'easymotion/vim-easymotion'
-Plug 'nathanaelkane/vim-indent-guides'
-Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
-
-
-" Add plugins to &runtimepath
-call plug#end()
-" }}}
 
 
 " colorize {{{
@@ -213,8 +216,6 @@ let g:indent_guides_start_level = 1
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#vcs_priority = ["git"]
 set laststatus=2
-"let g:airline_theme='papercolor'
-"let g:lightline = { 'colorscheme': 'PaperColor' }
 let g:airline_powerline_fonts = 1
 let g:airline_detect_spell=0
 
