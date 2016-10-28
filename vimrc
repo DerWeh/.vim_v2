@@ -141,3 +141,14 @@ endif
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
+
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+" Add plugins to &runtimepath
+call plug#end()
