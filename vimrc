@@ -29,16 +29,17 @@ call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
 
-
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
+Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle'}
 
 
 Plug 'tpope/vim-fugitive'
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
+Plug 'vim-scripts/TaskList.vim'
 
 Plug 'easymotion/vim-easymotion'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -72,10 +73,8 @@ else
 endif
 " display incomplete commands
 set showcmd
-" The Vim editor will start searching when you type the first character of the
-" search string.
+
 set incsearch
-" Any search highlights the string matched by the search.
 set hlsearch
 set ignorecase
 set smartcase
@@ -116,6 +115,7 @@ map <C-n> :nohl<CR>
 nnoremap <silent> <C-p> :CtrlP<CR>
 nmap <silent> <Leader>pd <Plug>(pydocstring)
 nmap <leader>tc <Plug>Colorizer
+map <F8> <Esc>:TagbarToggle<CR>
 " }}}
 
 
@@ -239,3 +239,7 @@ let g:airline_symbols.paste = 'PASTE'
 let g:airline_symbols.whitespace = 'Ξ'
 let g:airline_symbols.spell = ''
 "}}}
+
+" TagBar{{{
+let g:tagbar_sort = 0
+" }}}
