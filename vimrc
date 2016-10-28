@@ -30,7 +30,7 @@ syntax on
 
 
 set background=light
-" colorscheme PaperColor
+colorscheme PaperColor
 " Show whitespace
 highlight ExtraWhitespace ctermbg=Magenta guibg=#ffafd7
 au InsertLeave * match ExtraWhitespace /\s\+$/
@@ -71,8 +71,6 @@ set ttyfast
 "set tags+=~/.vim/tags/gl
 "set tags+=~/.vim/tags/sdl
 "set tags+=~/.vim/tags/qt4
-"" Install DoxygenToolkit from http://www.vim.org/scripts/script.php?script_id=987
-"let g:DoxygenToolkit_authorName="John Doe <john@doe.com>"
 
 " key mappings {{{
 
@@ -121,7 +119,7 @@ if &diff
   map <M-Right> dp
 else
   " spell settings
-  setlocal spell spelllang=en
+  :setlocal spell spelllang=en
   " set the spellfile - folders must exist
   set spellfile=~/.vim/spellfile.add
   map <M-Down> ]s
@@ -157,14 +155,17 @@ call plug#begin('~/.vim/plugged')
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
+Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
 
 
 Plug 'tpope/vim-fugitive'
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
-Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
+Plug 'NLKNguyen/papercolor-theme'
+
 Plug 'easymotion/vim-easymotion'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
 
 
 " Add plugins to &runtimepath
@@ -208,3 +209,32 @@ let g:indent_guides_default_mapping = 1
 let g:indent_guides_start_level = 1
 "}}}
 
+" airline configuration {{{
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#branch#vcs_priority = ["git"]
+set laststatus=2
+"let g:airline_theme='papercolor'
+"let g:lightline = { 'colorscheme': 'PaperColor' }
+let g:airline_powerline_fonts = 1
+let g:airline_detect_spell=0
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+let g:airline_symbols.paste = 'PASTE'
+let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_symbols.spell = ''
+"}}}
