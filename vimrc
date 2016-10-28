@@ -37,8 +37,6 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " highlight matching braces
 set showmatch
-" intelligent comments
-set comments=sl:/*,mb:\ *,elx:\ */
 
 if has("vms")
   set nobackup      " do not keep a backup file, use versions instead
@@ -142,13 +140,18 @@ filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
 
+
+" plug-in management {{{
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
 
 
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
+
+Plug 'tpope/vim-fugitive'
 
 " Add plugins to &runtimepath
 call plug#end()
+" }}}
