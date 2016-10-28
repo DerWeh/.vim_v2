@@ -33,7 +33,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
-Plug 'majutsushi/tagbar', { 'on':  'TagbarToggle'}
+Plug 'majutsushi/tagbar'  " , { 'on':  'TagbarToggle'}
 
 
 Plug 'tpope/vim-fugitive'
