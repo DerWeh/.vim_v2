@@ -67,11 +67,12 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 " highlight matching braces
 set showmatch
 
-if has("vms")
-  set nobackup      " do not keep a backup file, use versions instead
-else
-  set backup        " keep a backup file
-endif
+set backup
+set writebackup
+" backup directories, '//' for unique file name, ',.' in '.' as alternative
+set backupdir=~/.vim/.backup//
+set undofile
+set undodir=~/.vim/.undo//
 " display incomplete commands
 set showcmd
 
@@ -83,21 +84,6 @@ set smartcase
 "sometimes increases performance
 set lazyredraw " can lead to problems with splits?
 set ttyfast
-
-
-"" store swapfiles in a central location
-"set directory=~/.vim/tmp/swap//,.,/var/tmp//,/tmp//
-"if !isdirectory(expand("~") . '/.vim' . '/tmp/swap')
-"  call mkdir(expand("~") . '/.vim' . '/tmp/swap', 'p')
-"endif
-
-"" Install OmniCppComplete like described on http://vim.wikia.com/wiki/C++_code_completion
-"" This offers intelligent C++ completion when typing ‘.’ ‘->’ or <C-o>
-"" Load standard tag files
-"set tags+=~/.vim/tags/cpp
-"set tags+=~/.vim/tags/gl
-"set tags+=~/.vim/tags/sdl
-"set tags+=~/.vim/tags/qt4
 
 " key mappings {{{
 
