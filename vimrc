@@ -87,6 +87,13 @@ map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 " Remove highlight from search results
 map <C-n> :nohl<CR>
 
+" Plug-in mapping{{{
+nnoremap <silent> <C-p> :CtrlP<CR>
+nmap <silent> <Leader>pd <Plug>(pydocstring)
+nmap <leader>tc <Plug>Colorizer
+" }}}
+
+
 " Move between windows with Ctrl+[h,j,k,l]
 map <C-h> <C-w>h
 map <C-j> <C-w>j
@@ -150,10 +157,54 @@ call plug#begin('~/.vim/plugged')
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
-nnoremap <silent> <C-p> :CtrlP<CR>
+
 
 Plug 'tpope/vim-fugitive'
+Plug 'Konfekt/FastFold'
+Plug 'scrooloose/nerdcommenter'
+Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
+Plug 'easymotion/vim-easymotion'
+Plug 'nathanaelkane/vim-indent-guides'
+
 
 " Add plugins to &runtimepath
 call plug#end()
 " }}}
+
+
+" colorize {{{
+let g:colorizer_startup = 0
+"let g:colorizer_maxlines = 800
+" }}}
+
+" easy motion {{{
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1
+
+" Move to line
+map  <Leader><Leader>f <Plug>(easymotion-bd-f)
+nmap <Leader><Leader>f <Plug>(easymotion-overwin-f)
+
+map  <Leader><Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
+
+map  <Leader>/ <Plug>(easymotion-sn)
+omap <Leader>/ <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to
+" EasyMotion.
+" " Without these mappings, `n` & `N` works fine. (These mappings just provide
+" " different highlight method and have some other features )
+map  <Leader>n <Plug>(easymotion-next)
+map  <Leader>N <Plug>(easymotion-prev)
+" }}}
+
+" indent guides setting {{{
+let g:indent_guides_color_change_percent = 15
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'tagbar']
+let g:indent_guides_default_mapping = 1
+let g:indent_guides_start_level = 1
+"}}}
+
