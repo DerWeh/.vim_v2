@@ -76,6 +76,8 @@ set ttyfast
 "" Install DoxygenToolkit from http://www.vim.org/scripts/script.php?script_id=987
 "let g:DoxygenToolkit_authorName="John Doe <john@doe.com>"
 
+" key mappings {{{
+
 " in normal mode F2 will save the file
 nmap <F2> :w<CR>
 " in insert mode F2 will exit insert, save, enters insert again
@@ -103,9 +105,6 @@ nmap < <gv
 vmap > >gv
 nmap > >gv
 
-"" create doxygen comment
-"map <F6> :Dox<CR>
-
 " goto definition with F12
 map <F12> <C-]>
 " in diff mode we use the spell check keys for merging
@@ -123,6 +122,7 @@ else
   map <M-Down> ]s
   map <M-Up> [s
 endif
+"}}}
 
 " go to last cursor position upon opening files
 if has("autocmd")
