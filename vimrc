@@ -6,6 +6,8 @@ set fenc=utf-8
 set termencoding=utf-8
 set nocompatible
 
+set clipboard=unnamedplus
+
 filetype plugin indent on
 
 set autoindent  " use indentation of previous line
@@ -41,6 +43,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
+Plug 'vim-scripts/YankRing.vim'
 
 Plug 'easymotion/vim-easymotion'
 Plug 'nathanaelkane/vim-indent-guides'
@@ -103,6 +106,7 @@ nnoremap <silent> <C-p> :CtrlP<CR>
 nmap <silent> <Leader>pd <Plug>(pydocstring)
 nmap <leader>tc <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
+nnoremap <silent> <F10> :YRShow<CR>
 " }}}
 
 
@@ -160,8 +164,15 @@ filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
 
-
-
+" YankRing {{{
+" don't populate yank ring with singe elements
+let g:yankring_min_element_length = 2
+let g:yankring_record_insert = 1
+" only works if you have Vim with clipboard support
+let g:yankring_manual_clipboard_check = 1
+let g:yankring_replace_n_nkey = '<S-tab>'
+let g:yankring_replace_n_pkey = '<tab>'
+"}}}
 
 " colorize {{{
 let g:colorizer_startup = 0
