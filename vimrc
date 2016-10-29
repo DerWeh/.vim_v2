@@ -25,7 +25,7 @@ set expandtab
 set foldmethod=marker
 
 
-" plug-in management {{{
+" Plug-in management {{{
 call plug#begin('~/.vim/plugged')
 
 " Make sure you use single quotes
@@ -36,6 +36,7 @@ Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
 Plug 'majutsushi/tagbar'  " , { 'on':  'TagbarToggle'}
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
+Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 
 
 Plug 'chrisbra/vim-diff-enhanced'
@@ -107,6 +108,7 @@ nmap <silent> <Leader>pd <Plug>(pydocstring)
 nmap <leader>tc <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
+nmap <silent> <Leader>pd <Plug>(pydocstring)
 " }}}
 
 
