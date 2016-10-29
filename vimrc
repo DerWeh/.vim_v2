@@ -27,9 +27,12 @@ set foldmethod=marker
 
 " Plug-in management {{{
 call plug#begin('~/.vim/plugged')
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
 " Make sure you use single quotes
-
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
@@ -37,9 +40,8 @@ Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'Color
 Plug 'majutsushi/tagbar'  " , { 'on':  'TagbarToggle'}
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
+Plug 'chrisbra/vim-diff-enhanced', { 'on': ['PatienceDiff', 'EnhancedDiff']}
 
-
-Plug 'chrisbra/vim-diff-enhanced'
 Plug 'tpope/vim-fugitive'
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
@@ -57,10 +59,10 @@ Plug '~/.vim/plugged/papercolor-theme'
 call plug#end()
 " }}}
 
+" color settings"{{{
 " turn syntax highlighting on
 set t_Co=256
 syntax on
-
 
 set background=light
 colorscheme PaperColor
@@ -70,6 +72,7 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " highlight matching braces
 set showmatch
+"}}}
 
 set backup
 set writebackup
@@ -156,7 +159,6 @@ endif
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
 if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
             \ | wincmd p | diffthis
