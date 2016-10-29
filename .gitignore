@@ -3,3 +3,5 @@
 *~
 # auto-generated tag files
 tags
+# ignore undo history
+.undo/*
