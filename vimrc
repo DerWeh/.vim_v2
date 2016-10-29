@@ -41,7 +41,9 @@ Plug 'majutsushi/tagbar'  " , { 'on':  'TagbarToggle'}
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'chrisbra/vim-diff-enhanced', { 'on': ['PatienceDiff', 'EnhancedDiff']}
-
+let neocomplete = (v:version < 703 || !has('lua') || (v:version == 703 && !has('patch885')))
+Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
+:
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 Plug 'Konfekt/FastFold'
@@ -168,6 +170,74 @@ endif
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
+
+" neocomplete {{{
+if neocomplete
+  " Use neocomplete.
+  let g:neocomplete#enable_at_startup = 1
+
+  let g:neocomplete#enable_smart_case = 1
+  let g:neocomplete#enable_camel_case = 1
+  let g:neocomplete#auto_completion_start_length = 2
+
+  " increase limit for tag cache files
+  let g:neocomplete#sources#tags#cache_limit_size = 16777216 " 16MB
+  " default: 100, more to get more methods (e.g. np.<TAB>)
+  let g:neocomplete#max_list = 500
+
+  " disable for Python
+  "call neocomplete#util#set_default_dictionary(
+  "       \'g:neocomplete#sources#omni#input_patterns',
+  "       \'python',
+  "       \'')
+  "
+  "" <TAB>: completion.
+  "inoremap <expr> <Tab> pumvisible() ? '\<C-n>' : '\<Tab>'
+  " For smart TAB completion.
+  "inoremap <expr><TAB>  pumvisible() ? '\<C-n>' :
+  "        \ <SID>check_back_space() ? '\<TAB>' :
+  "        \ neocomplete#start_manual_complete()
+  "  function! s:check_back_space() "{{{
+  "    let col = col('.') - 1
+  "    return !col || getline('.')[col - 1]  =~ '\s'
+  "  endfunction"}}}
+
+  inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' :
+          \ <SID>check_back_space() ? '<S-TAB>' :
+          \ neocomplete#start_manual_complete()
+
+    function! s:check_back_space() "{{{
+      let col = col('.') - 1
+      return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction"}}}
+  let g:neocomplete#enable_auto_delimiter = 1
+  " let g:neocomplete#enable_auto_select = 1
+  " Search from neocomplete, omni candidates, vim keywords.
+  let g:neocomplete#fallback_mappings =
+    \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
+  let g:neocomplete#use_vimproc = 1
+
+  " enable neosnippet
+  smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+  imap <expr><TAB>
+   \ pumvisible() ? '<C-n>' :
+   \ neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" :
+   \ ! <SID>check_back_space() ? neocomplete#start_manual_complete() :
+   \ "\<TAB>"
+
+  imap <c-k> <Plug>(neosnippet_expand_or_jump)
+  smap <c-k> <Plug>(neosnippet_expand_or_jump)
+  xmap <c-k> <Plug>(neosnippet_expand_target)
+
+  " let g:neosnippet#enable_completed_snippet=1
+  " For conceal markers.
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+endif
+"}}}
 
 " YankRing {{{
 " don't populate yank ring with singe elements
