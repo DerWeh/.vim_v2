@@ -1,6 +1,6 @@
 reselect = False             # reselect lines after sending from Visual mode
 show_execution_count = False # wait to get numbers for In[43]: feedback?
-monitor_subchannel = False   # update vim-ipython 'shell' on every send?
+monitor_subchannel = True # update vim-ipython 'shell' on every send?
 current_line = ''
 
 try:
@@ -1010,3 +1010,35 @@ def get_session_history(session=None, pattern=None):
         return []
     except KeyError:
         return []
+
+
+# !my personal setup for the kernel
+def setup_kernel():
+    request = r"""
+import inspect
+import IPython
+
+def completion_metadata(ip):
+    metadata = [dict(word=m) for m in ip.Completer.matches]
+    for m in metadata:
+        try:
+            obj = eval(m['word'], ip.user_ns)
+        except Exception:
+            continue
+        doc = inspect.getdoc(obj)
+        if callable(obj):
+            try:
+                m['menu'] = str(IPython.utils.signatures.signature(obj)) + '\t'
+            except Exception:
+                m['menu'] = ''
+            if doc:
+                m['menu'] += doc.split('\n')[0]
+                m['info'] = doc
+        else:
+            m['menu'] = str(obj)
+            if doc:
+                m['info'] = doc
+    return metadata
+"""
+    send(request, silent=True)
+

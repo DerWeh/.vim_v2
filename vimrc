@@ -317,7 +317,3 @@ let g:airline_symbols.spell = ''
 " TagBar{{{
 let g:tagbar_sort = 0
 " }}}
-
-" IPython {{{
-let g:ipy_autostart = 0
-"}}}

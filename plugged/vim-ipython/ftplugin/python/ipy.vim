@@ -45,14 +45,14 @@ endif
 
 " Enable cell folding
 if !exists('g:ipy_cell_folding')
-    let g:ipy_cell_folding = 0
+    let g:ipy_cell_folding = 1
 endif
 
 if !exists('g:ipython_dictionary_completion')
-    let g:ipython_dictionary_completion = 0
+    let g:ipython_dictionary_completion = 1
 endif
 if !exists('g:ipython_greedy_matching')
-    let g:ipython_greedy_matching = 0
+    let g:ipython_greedy_matching = 1
 endif
 
 " Use -i with %run magic by default
@@ -139,7 +139,7 @@ endfun
 
 augroup vim-ipython
     autocmd!
-    au FileType python IPython
+    "au FileType python IPython
     " Update the vim-ipython shell when the cursor is not moving.
     " You can change how quickly this happens after you stop moving the cursor by
     " setting 'updatetime' (in milliseconds). For example, to have this event
@@ -207,7 +207,7 @@ function! s:DoMappings()
        endif
         " map  <buffer> <silent> <S-F5>         <Plug>(IPython-RunLine)
         map  <buffer> <silent> <F9>           <Plug>(IPython-RunLines)
-        map  <buffer> <silent> ,d             <Plug>(IPython-OpenPyDoc)
+        map  <buffer> <silent> <Leader>d             <Plug>(IPython-OpenPyDoc)
         map  <buffer> <silent> <M-r>          <Plug>(IPython-UpdateShell)
         map  <buffer> <silent> <S-F9>         <Plug>(IPython-ToggleReselect)
         "map  <buffer> <silent> <C-F6>         <Plug>(IPython-StartDebugging)
@@ -231,7 +231,21 @@ function! s:DoMappings()
         map  <buffer> <silent> <M-S>             <Plug>(IPython-RunLineAsTopLevel)
         "xmap <buffer> <silent> <Leader>x         <Plug>(IPython-RunLinesAsTopLevel)
         xmap <buffer> <silent> <M-S>             <Plug>(IPython-RunLines)
-        map  <buffer> <silent> <C-Return>        <Plug>(IPython-RunCell)
+        map  <buffer>          <C-Return>        <Plug>(IPython-RunCell)
+		    map  <buffer>          			    <Plug>(IPython-RunCell)
+
+        " personal changes
+        map  <buffer>          <Leader>s         <Plug>(IPython-RunCell)
+            " <CR><BS><C-o> ensures to leave edit and autocomplete
+        imap <buffer> <silent> <S-Return>        <CR><BS><C-o><Plug>(IPython-RunLine)<CR>
+        imap <buffer>          OM              <CR><BS><C-o><Plug>(IPython-RunLine)<CR>
+        " imap <buffer> <silent> <Leader>d         <CR><BS><C-o><Plug>(IPython-OpenPyDoc)
+        map  <buffer> <silent> <Leader>d         <Esc>:<C-u>call <SID>GetDocBuffer()<CR>
+        imap <buffer> <silent> <Leader>d         <Esc>:<C-u>call <SID>GetDocBuffer()<CR>
+        map  <buffer> <silent> <Leader>r         <Plug>(IPython-UpdateShell)
+        map  <buffer> <silent> <Leader>q         <Plug>(IPython-PlotClearCurrent)
+        map  <buffer> <silent> <Leader>qq        <Plug>(IPython-PlotCloseAll)
+
 
         " noremap  <buffer> <silent> <M-c>      I#<ESC>
         " xnoremap <buffer> <silent> <M-c>      I#<ESC>
@@ -251,6 +265,7 @@ function! s:DoMappings()
     augroup END
 
     setlocal omnifunc=CompleteIPython
+    "call SuperTabChain(&omnifunc, "<c-p>")
 endfunction
 
 function! s:GetDocBuffer()
@@ -260,12 +275,13 @@ function! s:GetDocBuffer()
     nnoremap <buffer> <silent> ` <C-w>p:if winheight(0)<30<bar>res 30<bar>endif<bar>undojoin<bar>startinsert!<CR>
 endfunction
 
-command! -nargs=* IPython :call <SID>DoMappings()|:Python2or3 km_from_string("<args>")
-command! -nargs=0 IPythonClipboard :Python2or3 km_from_string(vim.eval('@+'))
-command! -nargs=0 IPythonXSelection :Python2or3 km_from_string(vim.eval('@*'))
-command! -nargs=* IPythonNew :Python2or3 new_ipy("<args>")
-command! -nargs=* IPythonInterrupt :Python2or3 interrupt_kernel_hack("<args>")
-command! -nargs=0 IPythonTerminate :Python2or3 terminate_kernel_hack()
+" custom changes: added ';setup_kernel()'
+command! -nargs=* IPython :call <SID>DoMappings()|:Python2or3 km_from_string("<args>");setup_kernel()
+command! -nargs=0 IPythonClipboard :Python2or3 km_from_string(vim.eval('@+'));setup_kernel()
+command! -nargs=0 IPythonXSelection :Python2or3 km_from_string(vim.eval('@*'));setup_kernel()
+command! -nargs=* IPythonNew :Python2or3 new_ipy("<args>");setup_kernel()
+command! -nargs=* IPythonInterrupt :Python2or3 interrupt_kernel_hack("<args>");setup_kernel()
+command! -nargs=0 IPythonTerminate :Python2or3 terminate_kernel_hack();setup_kernel()
 
 function! IPythonBalloonExpr()
 Python2or3 << endpython
@@ -389,11 +405,21 @@ endfun
 
 " Custom folding function to fold cells
 function! FoldByCell(lnum)
+    " let level = indent(a:linenum) / &shiftwidth
     let pattern = '\v^\s*(##|' . escape('# <codecell>', '<>') . ').*$'
+    let custop = '\v\{\{\{'
+    let custclose = '\v}}}$'
     if getline(a:lnum) =~? pattern
         return '>1'
     elseif getline(a:lnum+1) =~? pattern
         return '<1'
+    elseif getline(a:lnum) =~? custop
+        " return '>' . string(indent(a:lnum) / &shiftwidth + 1)
+        return '>1'
+    elseif getline(a:lnum) =~? custclose
+        return '<1'
+    "elseif getline(a:lnum) =~? '\v^\s*$'
+    "    return '='
     else
         return '='
     endif
