@@ -82,10 +82,10 @@ set showmatch
 
 set backup
 set writebackup
-" backup directories, '//' for unique file name, ',.' in '.' as alternative
+let &bex = '~' . substitute(expand('%:p'), '/', '%', 'g')
 set backupdir=~/.vim/.backup//
 set undofile
-set undodir=~/.vim/.undo//
+set undodir=~/.vim/.undo//  " ending with `//` creates unique names
 " display incomplete commands
 set showcmd
 
