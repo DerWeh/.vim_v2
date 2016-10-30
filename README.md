@@ -11,6 +11,8 @@ Special requirements:
 ---------------------
 
 vimproc: asynchronous execution library
-  -needs binaries on Windows
-  -refer https://github.com/Shougo/vimproc.vim
+
+    -needs binaries on Windows
+  
+    -refer https://github.com/Shougo/vimproc.vim
 
