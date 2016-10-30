@@ -43,7 +43,9 @@ Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring
 Plug 'chrisbra/vim-diff-enhanced', { 'on': ['PatienceDiff', 'EnhancedDiff']}
 let neocomplete = !(v:version < 703 || !has('lua') || (v:version == 703 && !has('patch885')))
 Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
+Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 
+Plug 'spiiph/vim-space'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
 Plug 'Konfekt/FastFold'
@@ -111,11 +113,13 @@ map <C-n> :nohl<CR>
 
 " Plug-in mapping{{{
 nnoremap <silent> <C-p> :CtrlP<CR>
-nmap <silent> <Leader>pd <Plug>(pydocstring)
 nmap <leader>tc <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
 nmap <silent> <Leader>pd <Plug>(pydocstring)
+nmap <Leader>ww <Plug>VimwikiIndex
+nmap <Leader>wt <Plug>VimwikiTabIndex
+nmap <Leader>ws <Plug>VimwikiUISelect
 " }}}
 
 
@@ -126,8 +130,8 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " Move between tabs
-map <Leader>n <esc>:tabprevious<CR>
-map <Leader>m <esc>:tabnext<CR>
+map <Leader><TAB> <esc>:tabprevious<CR>
+map <Leader><S-TAB> <esc>:tabnext<CR>
 
 " Intending codeblocks
 vmap < <gv
