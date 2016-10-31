@@ -205,10 +205,6 @@ if neocomplete
   "inoremap <expr><TAB>  pumvisible() ? '\<C-n>' :
   "        \ <SID>check_back_space() ? '\<TAB>' :
   "        \ neocomplete#start_manual_complete()
-  "  function! s:check_back_space() "{{{
-  "    let col = col('.') - 1
-  "    return !col || getline('.')[col - 1]  =~ '\s'
-  "  endfunction"}}}
 
   inoremap <expr><S-TAB>  pumvisible() ? '<C-p>' :
           \ <SID>check_back_space() ? '<S-TAB>' :
@@ -235,9 +231,9 @@ if neocomplete
    \ ! <SID>check_back_space() ? neocomplete#start_manual_complete() :
    \ "\<TAB>"
 
-  imap <c-k> <Plug>(neosnippet_expand_or_jump)
-  smap <c-k> <Plug>(neosnippet_expand_or_jump)
-  xmap <c-k> <Plug>(neosnippet_expand_target)
+  imap <c-j> <Plug>(neosnippet_expand_or_jump)
+  smap <c-j> <Plug>(neosnippet_expand_or_jump)
+  xmap <c-j> <Plug>(neosnippet_expand_target)
 
   " let g:neosnippet#enable_completed_snippet=1
   " For conceal markers.
