@@ -3,5 +3,5 @@
 # auto-generated tag files
 tags
 # ignore undo history and backups
-.undo/*
-.backup/*
+.undo/%*
+.backup/*~%*
