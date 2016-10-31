@@ -4,4 +4,4 @@
 tags
 # ignore undo history and backups
 .undo/%*
-.backup/*~%*
+.backup/*~*
