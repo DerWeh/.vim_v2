@@ -88,6 +88,7 @@ set undofile
 set undodir=~/.vim/.undo//  " ending with `//` creates unique names
 " display incomplete commands
 set showcmd
+set wildmenu
 
 set incsearch
 set hlsearch
