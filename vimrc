@@ -23,6 +23,7 @@ set softtabstop=2
 set expandtab
 
 set foldmethod=marker
+set backspace=2
 
 
 " Plug-in management {{{
@@ -45,6 +46,7 @@ let neocomplete = !(v:version < 703 || !has('lua') || (v:version == 703 && !has(
 Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 
+Plug 'tpope/vim-surround'
 Plug 'spiiph/vim-space'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'tpope/vim-fugitive'
