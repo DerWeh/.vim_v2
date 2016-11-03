@@ -35,7 +35,7 @@ endfunction
 
 " Make sure you use single quotes
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' } | Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeTabsTogglem', '<Plug>NERDTreeTabsToggle'] } | Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'jistr/vim-nerdtree-tabs'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
 Plug 'majutsushi/tagbar'  " , { 'on':  'TagbarToggle'}
@@ -124,6 +124,7 @@ nmap <silent> <Leader>pd <Plug>(pydocstring)
 nmap <Leader>ww <Plug>VimwikiIndex
 nmap <Leader>wt <Plug>VimwikiTabIndex
 nmap <Leader>ws <Plug>VimwikiUISelect
+nmap tree <Plug>NERDTreeTabsToggle<CR>
 " }}}
 
 
@@ -320,4 +321,9 @@ let g:airline_symbols.spell = ''
 
 " TagBar{{{
 let g:tagbar_sort = 0
+" }}}
+
+" NerdTree {{{
+let g:nerdtree_tabs_open_on_gui_startup = 2
+let g:nerdtree_tabs_open_on_console_startup = 2
 " }}}
