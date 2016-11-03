@@ -38,7 +38,6 @@ endfunction
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeTabsTogglem', '<Plug>NERDTreeTabsToggle'] } | Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'jistr/vim-nerdtree-tabs'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
-Plug 'majutsushi/tagbar'  " , { 'on':  'TagbarToggle'}
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'chrisbra/vim-diff-enhanced', { 'on': ['PatienceDiff', 'EnhancedDiff']}
@@ -46,6 +45,8 @@ let neocomplete = !(v:version < 703 || !has('lua') || (v:version == 703 && !has(
 Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 
+Plug 'roman/golden-ratio'
+Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'spiiph/vim-space'
@@ -125,6 +126,8 @@ nmap <Leader>ww <Plug>VimwikiIndex
 nmap <Leader>wt <Plug>VimwikiTabIndex
 nmap <Leader>ws <Plug>VimwikiUISelect
 nmap tree <Plug>NERDTreeTabsToggle<CR>
+nmap <C-w>r <Plug>(golden_ratio_resize)
+nmap <C-w>f <C-w><Bar><C-w>_
 " }}}
 
 
@@ -133,6 +136,18 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+nnoremap c<C-j> :bel sp new<cr>
+nnoremap c<C-k> :abo sp new<cr>
+nnoremap c<C-h> :lefta vsp new<cr>
+nnoremap c<C-l> :rightb vsp new<cr>
+nnoremap g<C-j> <C-w>j:let &winheight = &lines * 7 / 10<cr>
+nnoremap g<C-k> <C-w>k:let &winheight = &lines * 7 / 10<cr>
+nnoremap g<C-h> <C-w>h<C-w>_
+nnoremap g<C-l> <C-w>l<C-w>_
+nnoremap d<C-j> <C-w>j<C-w>c
+nnoremap d<C-k> <C-w>k<C-w>c
+nnoremap d<C-h> <C-w>h<C-w>c
+nnoremap d<C-l> <C-w>l<C-w>c
 
 " Move between tabs
 map <Leader><TAB> <esc>:tabprevious<CR>
@@ -326,4 +341,9 @@ let g:tagbar_sort = 0
 " NerdTree {{{
 let g:nerdtree_tabs_open_on_gui_startup = 2
 let g:nerdtree_tabs_open_on_console_startup = 2
+" }}}
+
+" Golden-Ratio {{{
+let g:golden_ratio_autocommand = 0
+let g:golden_ratio_exclude_nonmodifiable = 1
 " }}}
