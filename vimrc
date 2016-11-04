@@ -65,8 +65,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
 
 " personal modified
+Plug 'DerWeh/papercolor-theme'
 Plug '~/.vim/plugged/vim-ipython', { 'for': 'python', 'on': ['IPython', 'IPythonNew']}
-Plug '~/.vim/plugged/papercolor-theme'
 
 " Add plug-in to &runtimepath
 call plug#end()
