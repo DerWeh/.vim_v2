@@ -45,6 +45,7 @@ let neocomplete = !(v:version < 703 || !has('lua') || (v:version == 703 && !has(
 Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 Plug 'alfredodeza/pytest.vim', { 'on': 'Pytest'}
+Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 
 Plug 'roman/golden-ratio'
 Plug 'majutsushi/tagbar'
@@ -349,3 +350,15 @@ let g:nerdtree_tabs_open_on_console_startup = 2
 let g:golden_ratio_autocommand = 0
 let g:golden_ratio_exclude_nonmodifiable = 1
 " }}}
+
+"ConqueTerm {{{
+let g:ConqueTerm_Color = 0
+let g:ConqueTerm_InsertOnEnter = 0
+let g:ConqueTerm_ReadUnfocused = 1
+let g:ConqueTerm_FastMode = 1
+let g:ConqueTerm_CloseOnEnd = 1
+let g:ConqueTerm_ToggleKey = '<Leader><F8>'
+let g:ConqueTerm_ExecFileKey = '<Leader><F11>'
+let g:ConqueTerm_SendFileKey = '<Leader><F10>'
+let g:ConqueTerm_SendVisKey = '<Leader><F9>'
+"}}}
