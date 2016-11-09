@@ -38,16 +38,17 @@ endfunction
 Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeTabsTogglem', '<Plug>NERDTreeTabsToggle'] } | Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'jistr/vim-nerdtree-tabs'
 Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
-Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
-Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'chrisbra/vim-diff-enhanced', { 'on': ['PatienceDiff', 'EnhancedDiff']}
 let neocomplete = !(v:version < 703 || !has('lua') || (v:version == 703 && !has('patch885')))
-Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets'
+Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' | Plug 'Shougo/neosnippet-snippets' | Plug 'Shougo/echodoc.vim'
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
-Plug 'alfredodeza/pytest.vim', { 'on': 'Pytest'}
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
+Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
+" Python
+Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
+Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
+Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 
-Plug 'roman/golden-ratio'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -66,7 +67,8 @@ Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
 
 " personal modified
 Plug 'DerWeh/papercolor-theme'
-Plug '~/.vim/plugged/vim-ipython', { 'for': 'python', 'on': ['IPython', 'IPythonNew']}
+"Plug 'wilywampa/vim-ipython', {'branch': 'metadata_dict', 'for': 'python', 'on': ['IPython', 'IPythonNew']}
+"Plug 'wilywampa/vim-ipython', {'for': 'python', 'on': ['IPython', 'IPythonNew']}
 
 " Add plug-in to &runtimepath
 call plug#end()
@@ -96,6 +98,8 @@ set undodir=~/.vim/.undo//  " ending with `//` creates unique names
 " display incomplete commands
 set showcmd
 set wildmenu
+set wildignore+=*.pyc,__cache__,*.o,*.obj
+set noshowmode
 
 set incsearch
 set hlsearch
@@ -203,7 +207,6 @@ set completeopt=menu,preview,longest
 if neocomplete
   " Use neocomplete.
   let g:neocomplete#enable_at_startup = 1
-
   let g:neocomplete#enable_smart_case = 1
   let g:neocomplete#enable_camel_case = 1
   let g:neocomplete#auto_completion_start_length = 2
@@ -213,12 +216,6 @@ if neocomplete
   " default: 100, more to get more methods (e.g. np.<TAB>)
   let g:neocomplete#max_list = 500
 
-  " disable for Python
-  "call neocomplete#util#set_default_dictionary(
-  "       \'g:neocomplete#sources#omni#input_patterns',
-  "       \'python',
-  "       \'')
-  "
   "" <TAB>: completion.
   "inoremap <expr> <Tab> pumvisible() ? '\<C-n>' : '\<Tab>'
   " For smart TAB completion.
@@ -239,8 +236,9 @@ if neocomplete
   " Search from neocomplete, omni candidates, vim keywords.
   let g:neocomplete#fallback_mappings =
     \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
-  let g:neocomplete#use_vimproc = 1
 
+  let g:neocomplete#use_vimproc = 1
+  "let g:neosnippet#enable_completed_snippet = 1
   " enable neosnippet
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
@@ -255,7 +253,6 @@ if neocomplete
   smap <c-j> <Plug>(neosnippet_expand_or_jump)
   xmap <c-j> <Plug>(neosnippet_expand_target)
 
-  " let g:neosnippet#enable_completed_snippet=1
   " For conceal markers.
   if has('conceal')
     set conceallevel=2 concealcursor=niv
@@ -309,32 +306,57 @@ map  <Leader>N <Plug>(easymotion-prev)
 "let g:indent_guides_start_level = 1
 ""}}}
 
+"indentLine {{{
+let g:indentLine_fileTypeExclude = ['text']
+"}}}
+
 " airline configuration {{{
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#branch#vcs_priority = ["git"]
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline_detect_spell=0
 
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-
 " unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-" let g:airline_symbols.linenr = '␊'
-" let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_symbols.paste = 'Þ'
-" let g:airline_symbols.paste = '∥'
-let g:airline_symbols.paste = 'PASTE'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline_symbols.spell = ''
+  "let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
+  "let g:airline_right_sep = '«'
+  let g:airline_right_sep = '◀'
+  let g:airline_symbols.crypt = '🔒'
+  "let g:airline_symbols.linenr = '␊'
+  "let g:airline_symbols.linenr = '␤'
+  let g:airline_symbols.linenr = '¶'
+  let g:airline_symbols.maxlinenr = '☰'
+  "let g:airline_symbols.maxlinenr = ''
+  let g:airline_symbols.branch = '⎇'
+  "let g:airline_symbols.paste = 'ρ'
+  "let g:airline_symbols.paste = 'Þ'
+  "let g:airline_symbols.paste = '∥'
+  let g:airline_symbols.paste = 'PASTE'
+  let g:airline_symbols.spell = 'Ꞩ'
+  let g:airline_symbols.notexists = '∄'
+  let g:airline_symbols.whitespace = 'Ξ'
+
+  "" powerline symbols
+  "let g:airline_left_sep = ''
+  let g:airline_left_alt_sep = ''
+  "let g:airline_right_sep = ''
+  let g:airline_right_alt_sep = ''
+  "let g:airline_symbols.branch = ''
+  "let g:airline_symbols.readonly = ''
+  "let g:airline_symbols.linenr = ''
+
+  "" old vim-powerline symbols
+  "let g:airline_left_sep = '⮀'
+  "let g:airline_left_alt_sep = '⮁'
+  "let g:airline_right_sep = '⮂'
+  "let g:airline_right_alt_sep = '⮃'
+  "let g:airline_symbols.branch = '⭠'
+  "let g:airline_symbols.readonly = '⭤'
+  "let g:airline_symbols.linenr = '⭡'
 "}}}
 
 " TagBar{{{
@@ -361,4 +383,9 @@ let g:ConqueTerm_ToggleKey = '<Leader><F8>'
 let g:ConqueTerm_ExecFileKey = '<Leader><F11>'
 let g:ConqueTerm_SendFileKey = '<Leader><F10>'
 let g:ConqueTerm_SendVisKey = '<Leader><F9>'
+"}}}
+
+"VimWiki {{{
+let g:vimwiki_folding = 'expr'
+let g:vimwiki_table_mappings = 0
 "}}}
