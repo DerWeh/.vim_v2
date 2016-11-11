@@ -54,7 +54,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'spiiph/vim-space'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive' | Plug 'gregsexton/gitv', { 'on': ['Gitv', 'Gitv!']}
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
@@ -97,7 +97,7 @@ set undodir=~/.vim/.undo//  " ending with `//` creates unique names
 " display incomplete commands
 set showcmd
 set wildmenu
-set wildmode=longest:full
+set wildmode=longest,full
 set wildignore+=*.pyc,__cache__,*.o,*.obj
 set noshowmode
 
