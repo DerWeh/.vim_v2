@@ -44,6 +44,7 @@ Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' 
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
+Plug 'vim-scripts/LanguageTool'
 " Python
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
@@ -167,6 +168,7 @@ nmap > >gv
 
 " goto definition with F12
 map <F12> <C-]>
+
 " in diff mode we use the spell check keys for merging
 if &diff
   " diff settings
@@ -176,10 +178,8 @@ if &diff
   map <M-Right> dp
 else
   " spell settings
-  set spell
-  :setlocal spell spelllang=en
-  " set the spellfile - folders must exist
-  set spellfile=~/.vim/spellfile.add
+  set spell 
+  set spelllang=en_us
   map <M-Down> ]s
   map <M-Up> [s
 endif
@@ -396,3 +396,8 @@ let g:ipy_cell_folding = 1
 let g:ipython_dictionary_completion = 1
 let g:ipy_monitor_subchannel = 1
 "}}}
+
+"LanguageTool {{{
+let g:languagetool_jar = '~/.vim/dependencies/LanguageTool-3.1/languagetool-commandline.jar'
+"}}}
+
