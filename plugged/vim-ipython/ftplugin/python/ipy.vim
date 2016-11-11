@@ -49,10 +49,10 @@ if !exists('g:ipy_cell_folding')
 endif
 
 if !exists('g:ipython_dictionary_completion')
-    let g:ipython_dictionary_completion = 1
+    let g:ipython_dictionary_completion = 0
 endif
 if !exists('g:ipython_greedy_matching')
-    let g:ipython_greedy_matching = 1
+    let g:ipython_greedy_matching = 0
 endif
 
 " Use -i with %run magic by default
@@ -99,12 +99,12 @@ endif
 
 " wait to get numbers for In[43]: feedback?
 if !exists('g:ipy_show_execution_count')
-	let g:ipy_show_execution_count = 1
+	let g:ipy_show_execution_count = 0
 endif
 
 " update vim-ipython 'shell' on every send?
 if !exists('g:ipy_monitor_subchannel')
-	let g:ipy_monitor_subchannel = 1
+	let g:ipy_monitor_subchannel = 0
 endif
 
 " flags to for IPython's run magic when using <F5>
@@ -121,8 +121,6 @@ vim_ipython_path = vim.eval("expand('<sfile>:h')")
 sys.path.append(vim_ipython_path)
 from vim_ipython import *
 
-class Result(object):
-    pass
 endpython
 
 fun! <SID>toggle_send_on_save()
@@ -139,7 +137,7 @@ endfun
 
 augroup vim-ipython
     autocmd!
-    "au FileType python IPython
+    au FileType python IPython
     " Update the vim-ipython shell when the cursor is not moving.
     " You can change how quickly this happens after you stop moving the cursor by
     " setting 'updatetime' (in milliseconds). For example, to have this event
@@ -171,10 +169,6 @@ augroup vim-ipython
 augroup END
 
 " Setup plugin mappings for the most common ways to interact with ipython.
-noremap  <Plug>(IPython-RunFile)            :python run_this_file()<CR>
-noremap  <Plug>(IPython-RunLine)            :python run_this_line()<CR>
-noremap  <Plug>(IPython-RunLines)           :python run_these_lines()<CR>
-noremap  <Plug>(IPython-RunCell)            :python run_this_cell()<CR>
 noremap  <Plug>(IPython-RunFile)            :update<CR>:Python2or3 run_this_file()<CR>
 noremap  <Plug>(IPython-ImportFile)         :update<CR>:Python2or3 run_this_file('-n')<CR>
 noremap  <Plug>(IPython-RunLine)            :Python2or3 run_this_line()<CR>
@@ -197,6 +191,8 @@ noremap  <Plug>(IPython-ToggleSendOnSave)   :call <SID>toggle_send_on_save()<CR>
 noremap  <Plug>(IPython-PlotClearCurrent)   :Python2or3 run_command("plt.clf()")<CR>
 noremap  <Plug>(IPython-PlotCloseAll)       :Python2or3 run_command("plt.close('all')")<CR>
 noremap  <Plug>(IPython-RunLineAsTopLevel)  :Python2or3 dedent_run_this_line()<CR>
+noremap  <Plug>(IPython-RunTextObj)          :<C-u>set opfunc=<SID>opfunc<CR>g@
+noremap  <Plug>(IPython-RunCell)            :<C-u>set opfunc=<SID>opfunc<CR>g@ap
 
 function! s:DoMappings()
     let b:did_ipython = 1
@@ -206,6 +202,7 @@ function! s:DoMappings()
         map  <buffer> <silent> g<F5>          <Plug>(IPython-ImportFile)
        endif
         " map  <buffer> <silent> <S-F5>         <Plug>(IPython-RunLine)
+        map  <buffer> <silent> <F6>           <Plug>(IPython-RunTextObj)
         map  <buffer> <silent> <F9>           <Plug>(IPython-RunLines)
         map  <buffer> <silent> <Leader>d             <Plug>(IPython-OpenPyDoc)
         map  <buffer> <silent> <M-r>          <Plug>(IPython-UpdateShell)
@@ -232,7 +229,7 @@ function! s:DoMappings()
         "xmap <buffer> <silent> <Leader>x         <Plug>(IPython-RunLinesAsTopLevel)
         xmap <buffer> <silent> <M-S>             <Plug>(IPython-RunLines)
         map  <buffer>          <C-Return>        <Plug>(IPython-RunCell)
-		    map  <buffer>          			    <Plug>(IPython-RunCell)
+        map  <buffer>          			    <Plug>(IPython-RunCell)
 
         " personal changes
         map  <buffer>          <Leader>s         <Plug>(IPython-RunCell)
@@ -240,7 +237,6 @@ function! s:DoMappings()
         imap <buffer> <silent> <S-Return>        <CR><BS><C-o><Plug>(IPython-RunLine)<CR>
         imap <buffer>          OM              <CR><BS><C-o><Plug>(IPython-RunLine)<CR>
         " imap <buffer> <silent> <Leader>d         <CR><BS><C-o><Plug>(IPython-OpenPyDoc)
-        map  <buffer> <silent> <Leader>d         <Esc>:<C-u>call <SID>GetDocBuffer()<CR>
         imap <buffer> <silent> <Leader>d         <Esc>:<C-u>call <SID>GetDocBuffer()<CR>
         map  <buffer> <silent> <Leader>r         <Plug>(IPython-UpdateShell)
         map  <buffer> <silent> <Leader>q         <Plug>(IPython-PlotClearCurrent)
@@ -265,7 +261,6 @@ function! s:DoMappings()
     augroup END
 
     setlocal omnifunc=CompleteIPython
-    "call SuperTabChain(&omnifunc, "<c-p>")
 endfunction
 
 function! s:GetDocBuffer()
@@ -277,11 +272,11 @@ endfunction
 
 " custom changes: added ';setup_kernel()'
 command! -nargs=* IPython :call <SID>DoMappings()|:Python2or3 km_from_string("<args>");setup_kernel()
-command! -nargs=0 IPythonClipboard :Python2or3 km_from_string(vim.eval('@+'));setup_kernel()
-command! -nargs=0 IPythonXSelection :Python2or3 km_from_string(vim.eval('@*'));setup_kernel()
+command! -nargs=0 IPythonClipboard :Python2or3 km_from_string(vim.eval('@+'))
+command! -nargs=0 IPythonXSelection :Python2or3 km_from_string(vim.eval('@*'))
 command! -nargs=* IPythonNew :Python2or3 new_ipy("<args>");setup_kernel()
-command! -nargs=* IPythonInterrupt :Python2or3 interrupt_kernel_hack("<args>");setup_kernel()
-command! -nargs=0 IPythonTerminate :Python2or3 terminate_kernel_hack();setup_kernel()
+command! -nargs=* IPythonInterrupt :Python2or3 interrupt_kernel_hack("<args>")
+command! -nargs=0 IPythonTerminate :Python2or3 terminate_kernel_hack()
 
 function! IPythonBalloonExpr()
 Python2or3 << endpython
@@ -304,8 +299,6 @@ def process_matches(matches, metadata, result):
         completions = matches
     else:
         completions = [s.encode(vim_encoding) for s in matches]
-        for i, m in enumerate(metadata):
-            metadata[i] = {k: v.encode(vim_encoding) for k, v in m.items()}
     if vim.vars['ipython_dictionary_completion'] and not vim.vars['ipython_greedy_matching']:
         for char in '\'"':
             if any(c.endswith(char + ']') for c in completions):
@@ -317,18 +310,13 @@ def process_matches(matches, metadata, result):
     except ValueError:
         pass
     for c, m in zip(completions, metadata):
+        result.clear()
+        result['word'] = c
         # vim can't handle null bytes in Python strings
-        m = {k: v.replace('\0', '^@') for k, v in m.items()}
-        result.word = c
-        if 'info' in m:
-            result.menu, result.info = m['menu'], m['info']
-            vim.command('call add(res, {"word": IPythonPyeval("r.word"),    '
-                                       '"menu": IPythonPyeval("r.menu"), '
-                                       '"info": IPythonPyeval("r.info")})')
-        else:
-            result.menu = m.get('menu', '')
-            vim.command('call add(res, {"word": IPythonPyeval("r.word"),    '
-                                       '"menu": IPythonPyeval("r.menu")})')
+        result.update({k: v.replace('\0', '^@') for k, v in m.items()})
+        vim.command('call add(res, {%s})' % ','.join(
+            '"{k}": IPythonPyeval("r[\'{k}\']")'.format(k=k)
+            for k in result))
 endpython
 
 fun! CompleteIPython(findstart, base)
@@ -396,7 +384,7 @@ except IOError:
     else:
         vim.command('setlocal omnifunc=')
     vim.command('return []')
-r = Result()  # result object to let vim access namespace while in a function
+r = dict()  # result object to let vim access namespace while in a function
 process_matches(matches, metadata, r)
 endpython
         return res
@@ -488,7 +476,7 @@ if ' ' in arglead:
     arglead = arglead.rpartition(' ')[0]
     matches = ['%s %s' % (arglead, m) for m in matches]
 if int(vim.eval('a:0')):
-    r = Result()
+    r = dict()
     process_matches(matches, metadata, r)
 endpython
   if a:0
@@ -509,4 +497,44 @@ function! GreedyCompleteIPython(findstart, base)
   else
     return IPythonCmdComplete(a:base, a:base, len(a:base), 1)
   endif
+endfunction
+
+function! s:opfunc(type)
+  " Originally from tpope/vim-scriptease
+  let sel_save = &selection
+  let cb_save = &clipboard
+  let reg_save = @@
+  let left_save = getpos("'<")
+  let right_save = getpos("'>")
+  let vimode_save = visualmode()
+  try
+    set selection=inclusive clipboard-=unnamed clipboard-=unnamedplus
+    if a:type =~ '^\d\+$'
+      silent exe 'normal! ^v'.a:type.'$hy'
+    elseif a:type =~# '^.$'
+      silent exe "normal! `<" . a:type . "`>y"
+    elseif a:type ==# 'line'
+      silent exe "normal! '[V']y"
+    elseif a:type ==# 'block'
+      silent exe "normal! `[\<C-V>`]y"
+    elseif a:type ==# 'visual'
+      silent exe "normal! gvy"
+    else
+      silent exe "normal! `[v`]y"
+    endif
+    redraw
+    let l:cmd = @@
+  finally
+    let @@ = reg_save
+    let &selection = sel_save
+    let &clipboard = cb_save
+    exe "normal! " . vimode_save . "\<Esc>"
+    call setpos("'<", left_save)
+    call setpos("'>", right_save)
+  endtry
+Python2or3 << EOF
+import textwrap
+import vim
+run_command(textwrap.dedent(vim.eval('l:cmd')))
+EOF
 endfunction

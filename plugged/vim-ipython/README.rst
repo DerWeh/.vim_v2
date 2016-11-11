@@ -109,23 +109,6 @@ Then, go to the qtconsole and run this line::
 
 You can also send whole files to IPython's ``%run`` magic using ``<F5>``.
 
-To execute predefined sections of a script, you can define Matlab-like cells
-using either ``##`` or ``# <codecell>`` markers. To execute a cell, move the
-cursor somewhere within it and press ``<Ctrl-Enter>``::
-
-  ## Do something
-  print('Hello')
-
-  ## Do something else
-  print('IPython')
-
-  # <codecell> This is an alternative cell marker
-  print('World!')
- 
-Cells (when deliminated by '# <codecell>' markers) are two-way compatible with
-IPython notebooks, so you can easily switch between browser and Vim without
-loosing them.
-
 **NEW in IPython 0.12**!
 If you're trying to do run code fragments that have leading whitespace, use
 ``<Alt-S>`` instead - it will dedent a single line, and remove the leading
@@ -170,12 +153,12 @@ not work on Windows, please report the issue to ).
 -------
 Options
 -------
-You can change these in your vimrc::
+You can change these at the top of the vim_ipython.py::
 
-  g:ipy_reselect = 0             # reselect lines after sending from Visual mode
-  g:ipy_show_execution_count = 1 # wait to get numbers for In[43]: feedback?
-  g:ipy_monitor_subchannel = 1   # update vim-ipython 'shell' on every send?
-  g:ipy_run_flags = '-i'         # flags to for IPython's run magic when using <F5>
+  reselect = False            # reselect lines after sending from Visual mode
+  show_execution_count = True # wait to get numbers for In[43]: feedback?
+  monitor_subchannel = True   # update vim-ipython 'shell' on every send?
+  run_flags= "-i"             # flags to for IPython's run magic when using <F5>
 
 **Disabling default mappings**
 In your own ``.vimrc``, if you don't like the mappings provided by default,
@@ -312,8 +295,6 @@ pull request with your attribution.
 * @memeplex for fixing the identifier grabbing on e.g. non-PEP8 compliant code
 * @pydave for IPythonTerminate (sending SIGTERM using our hack)
 * @luispedro for IPythonNew
-* @wmvanvliet for Matlab-like cell support.
-* @wmvanvliet for config support through vim-globals.
 * @jjhelmus and @wmvanvliet for IPython 3.x support.
 
 Similar Projects

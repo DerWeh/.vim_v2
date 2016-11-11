@@ -1,6 +1,6 @@
 reselect = False             # reselect lines after sending from Visual mode
 show_execution_count = False # wait to get numbers for In[43]: feedback?
-monitor_subchannel = True # update vim-ipython 'shell' on every send?
+monitor_subchannel = False   # update vim-ipython 'shell' on every send?
 current_line = ''
 
 try:
@@ -466,7 +466,12 @@ def ipy_complete(base, current_line, pos):
 
 def get_completion_metadata():
     """Generate and fetch completion metadata."""
-    request = '_completions = completion_metadata(get_ipython())'
+    request = '''
+try:
+    _completions = completion_metadata(get_ipython())
+except Exception:
+    pass
+'''
     try:
         msg_id = send(request, silent=True, user_variables=['_completions'])
     except TypeError: # change in IPython 3.0+
@@ -869,71 +874,6 @@ def dedent_run_this_line():
 def dedent_run_these_lines():
     run_these_lines(True)
 
-def is_cell_separator(line):
-    '''Determines whether a given line is a cell separator'''
-    cell_sep = ['##', '#%%%%', '# <codecell>']
-    for sep in cell_sep:
-        if line.strip().startswith(sep):
-            return True
-    return False
-
-@with_subchannel
-def run_this_cell():
-    '''Runs all the code in between two cell separators'''
-    cur_buf = vim.current.buffer
-    (cur_line, cur_col) = vim.current.window.cursor
-    cur_line -= 1
-
-    # Search upwards for cell separator
-    upper_bound = cur_line
-    while upper_bound > 0 and not is_cell_separator(cur_buf[upper_bound]):
-        upper_bound -= 1
-
-    # Skip past the first cell separator if it exists
-    if is_cell_separator(cur_buf[upper_bound]):
-        upper_bound += 1
-
-    # Search downwards for cell separator
-    lower_bound = min(upper_bound+1, len(cur_buf)-1)
-
-    while lower_bound < len(cur_buf)-1 and not is_cell_separator(cur_buf[lower_bound]):
-        lower_bound += 1
-
-    # Move before the last cell separator if it exists
-    if is_cell_separator(cur_buf[lower_bound]):
-        lower_bound -= 1
-
-    # Make sure bounds are within buffer limits
-    upper_bound = max(0, min(upper_bound, len(cur_buf)-1))
-    lower_bound = max(0, min(lower_bound, len(cur_buf)-1))
-
-    # Make sure of proper ordering of bounds
-    lower_bound = max(upper_bound, lower_bound)
-
-    # Calculate minimum indentation level of entire cell
-    shiftwidth = vim.eval('&shiftwidth')
-    count = lambda x: int(vim.eval('indent(%d)/%s' % (x,shiftwidth)))
-
-    min_indent = count(upper_bound+1)
-    for i in range(upper_bound+1, lower_bound):
-        indent = count(i)
-        if indent < min_indent:
-            min_indent = indent
-
-    # Perform dedent
-    if min_indent > 0:
-        vim.command('%d,%d%s' % (upper_bound+1, lower_bound+1, '<'*min_indent))
-
-    # Execute cell
-    lines = "\n".join(cur_buf[upper_bound:lower_bound+1])
-    msg_id = send(lines)
-    prompt = "lines %d-%d "% (upper_bound+1,lower_bound+1)
-    print_prompt(prompt, msg_id)
-
-    # Re-indent
-    if min_indent > 0:
-        vim.command("silent undo")
-
 #def set_this_line():
 #    # not sure if there's a way to do this, since we have multiple clients
 #    send("get_ipython().shell.set_next_input(\'%s\')" % vim.current.line.replace("\'","\\\'"))
@@ -1015,8 +955,8 @@ def get_session_history(session=None, pattern=None):
 # !my personal setup for the kernel
 def setup_kernel():
     request = r"""
-import inspect
-import IPython
+from inspect import getdoc as __getdoc__
+from IPython.utils.signatures import signature as __signature__
 
 def completion_metadata(ip):
     metadata = [dict(word=m) for m in ip.Completer.matches]
@@ -1025,14 +965,14 @@ def completion_metadata(ip):
             obj = eval(m['word'], ip.user_ns)
         except Exception:
             continue
-        doc = inspect.getdoc(obj)
+        doc = __getdoc__(obj)
         if callable(obj):
             try:
-                m['menu'] = str(IPython.utils.signatures.signature(obj)) + '\t'
-            except Exception:
-                m['menu'] = ''
+                m['abbr'] = m['word'] +  str(__signature__(obj))
+            except ValueError:
+                pass
             if doc:
-                m['menu'] += doc.split('\n')[0]
+                m['menu'] = doc.split('\n')[0]
                 m['info'] = doc
         else:
             m['menu'] = str(obj)

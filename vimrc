@@ -194,7 +194,7 @@ endif
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+  command DiffOrig vert new | set bt=nofile | r ++edit# | 0d_ | diffthis
             \ | wincmd p | diffthis
 endif
 
@@ -388,4 +388,11 @@ let g:ConqueTerm_SendVisKey = '<Leader><F9>'
 "VimWiki {{{
 let g:vimwiki_folding = 'expr'
 let g:vimwiki_table_mappings = 0
+"}}}
+
+"Ipython {{{
+let g:ipython_greedy_matching = 1
+let g:ipy_cell_folding = 1
+let g:ipython_dictionary_completion = 1
+let g:ipy_monitor_subchannel = 1
 "}}}
