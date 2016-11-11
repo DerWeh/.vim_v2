@@ -67,8 +67,7 @@ Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
 
 " personal modified
 Plug 'DerWeh/papercolor-theme'
-"Plug 'wilywampa/vim-ipython', {'branch': 'metadata_dict', 'for': 'python', 'on': ['IPython', 'IPythonNew']}
-"Plug 'wilywampa/vim-ipython', {'for': 'python', 'on': ['IPython', 'IPythonNew']}
+Plug 'DerWeh/vim-ipython', {'for': 'python', 'on': ['IPython', 'IPythonNew']}
 
 " Add plug-in to &runtimepath
 call plug#end()
@@ -238,7 +237,7 @@ if neocomplete
     \ ["\<C-x>\<C-o>", "\<C-x>\<C-n>"]
 
   let g:neocomplete#use_vimproc = 1
-  "let g:neosnippet#enable_completed_snippet = 1
+  let g:neosnippet#enable_completed_snippet = 1
   " enable neosnippet
   smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
   \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
@@ -307,7 +306,8 @@ map  <Leader>N <Plug>(easymotion-prev)
 ""}}}
 
 "indentLine {{{
-let g:indentLine_fileTypeExclude = ['text']
+let g:indentLine_fileTypeExclude = ['text', 'markdown']
+let g:indentLine_setConceal = 0
 "}}}
 
 " airline configuration {{{
