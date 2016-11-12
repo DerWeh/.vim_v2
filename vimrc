@@ -52,6 +52,7 @@ Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 
 Plug 'Shougo/unite.vim'
+      \ | Plug 'Shougo/unite-outline'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -406,4 +407,12 @@ let g:ipython_dictionary_completion = 1
 let g:ipy_monitor_subchannel = 1
 "}}}
 
+"Unite{{{
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+"}}}
 "}}}
