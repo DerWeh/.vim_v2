@@ -52,7 +52,7 @@ Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 
 Plug 'Shougo/unite.vim'
-      \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session'
+      \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session' | Plug 'ujihisa/unite-colorscheme'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
