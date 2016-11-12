@@ -448,6 +448,14 @@ call unite#custom#profile('default', 'context', {
 \   'direction': 'botright',
 \ })
 call unite#custom#profile('outline', 'context', {'direction': 'topleft'})
+
+call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+      \ 'ignore_pattern', join([
+      \ '\.git/',
+      \ '__cache__/',
+      \ '\.undo',
+      \ '\.backup',
+      \ ], '\|'))
 "}}}
 
 "}}}
