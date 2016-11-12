@@ -132,7 +132,6 @@ map <C-n> :nohl<CR>
 
 " Plug-in mapping{{{
 nmap <F1> :Unite -start-insert help<CR>
-nnoremap <silent> <C-p> :CtrlP<CR>
 nmap <leader>tc <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
@@ -143,6 +142,11 @@ nmap <Leader>ws <Plug>VimwikiUISelect
 nmap tree <Plug>NERDTreeTabsToggle<CR>
 nmap <C-w>r <Plug>(golden_ratio_resize)
 nmap <C-w>f <C-w><Bar><C-w>_
+
+"Unite mappings
+nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <space>/ :Unite -no-empty -no-resize grep<cr>
+nnoremap <space>s :Unite -quick-match buffer<cr>
 " }}}
 
 
@@ -412,8 +416,8 @@ let g:ipy_monitor_subchannel = 1
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  imap <buffer> <C-n>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
 endfunction
 "}}}
 "}}}
