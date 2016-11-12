@@ -131,7 +131,7 @@ map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 map <C-n> :nohl<CR>
 
 " Plug-in mapping{{{
-nmap <F1> :Unite -start-insert help<CR>
+nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nmap <leader>tc <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
@@ -144,7 +144,10 @@ nmap <C-w>r <Plug>(golden_ratio_resize)
 nmap <C-w>f <C-w><Bar><C-w>_
 
 "Unite mappings
-nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert file_rec/async file_mru:!<cr>
+" generate unite prefix, nmap ? [unite] can use it then
+nnoremap [unite] <Nop>
+nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
+      \ file_rec/async file_mru bookmark:!<cr>
 nnoremap <space>/ :Unite -no-empty -no-resize grep<cr>
 nnoremap <space>s :Unite -quick-match buffer<cr>
 " }}}
@@ -432,14 +435,18 @@ function! s:unite_settings()
   imap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
   imap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
 
-  nmap <buffer> <C-h> <Plug>(unite_toggle_auto_preview)
+  nmap <buffer> <C-g> <Plug>(unite_toggle_auto_preview)
 
   nmap <buffer> <ESC> :UniteClose<cr>
+  nnoremap <silent><buffer><expr> cd unite#do_action('lcd')
+  nmap <buffer> <C-z> <Plug>(unite_toggle_transpose_window)
+  nmap <buffer><silent> <c-r> <Plug>(unite_redraw)
 endfunction
 
 call unite#custom#profile('default', 'context', {
 \   'direction': 'botright',
 \ })
+call unite#custom#profile('outline', 'context', {'direction': 'topleft'})
 "}}}
 
 "}}}
