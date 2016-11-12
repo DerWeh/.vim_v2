@@ -54,7 +54,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'spiiph/vim-space'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'tpope/vim-fugitive' | Plug 'gregsexton/gitv', { 'on': ['Gitv', 'Gitv!']}
+Plug 'tpope/vim-fugitive' | Plug 'gregsexton/gitv', { 'on': ['Gitv']}
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
@@ -307,7 +307,7 @@ map  <Leader>N <Plug>(easymotion-prev)
 ""}}}
 
 "indentLine {{{
-let g:indentLine_fileTypeExclude = ['text', 'markdown']
+let g:indentLine_fileTypeExclude = ['help', 'text', 'markdown']
 let g:indentLine_setConceal = 0
 "}}}
 
