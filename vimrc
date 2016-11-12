@@ -418,6 +418,28 @@ autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
   imap <buffer> <C-n>   <Plug>(unite_select_next_line)
   imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+
+  nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
+  nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+
+  nmap <silent><buffer><expr> Enter unite#do_action('switch')
+  nmap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+  nmap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
+  nmap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
+
+  imap <silent><buffer><expr> Enter unite#do_action('switch')
+  imap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+  imap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
+  imap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
+
+  nmap <buffer> <C-h> <Plug>(unite_toggle_auto_preview)
+
+  nmap <buffer> <ESC> :UniteClose<cr>
 endfunction
+
+call unite#custom#profile('default', 'context', {
+\   'direction': 'botright',
+\ })
 "}}}
+
 "}}}
