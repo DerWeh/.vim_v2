@@ -97,7 +97,7 @@ set undodir=~/.vim/.undo//  " ending with `//` creates unique names
 " display incomplete commands
 set showcmd
 set wildmenu
-set wildmode=longest:full
+set wildmode=longest,full
 set wildignore+=*.pyc,__cache__,*.o,*.obj
 set noshowmode
 
@@ -109,6 +109,14 @@ set smartcase
 "sometimes increases performance
 set lazyredraw " can lead to problems with splits?
 set ttyfast
+" Speed up syntax highlighting {{{
+set nocursorcolumn
+set nocursorline
+syntax sync minlines=100
+syntax sync maxlines=260
+" Don't try to highlight lines longer than 800 characters, in order to speed up the viewport.
+set synmaxcol=900
+" }}}
 
 " key mappings {{{
 
@@ -169,6 +177,7 @@ nmap > >gv
 " goto definition with F12
 map <F12> <C-]>
 " in diff mode we use the spell check keys for merging
+set diffopt=vertical
 if &diff
   " diff settings
   map <M-Down> ]c
@@ -202,6 +211,23 @@ endif
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
+
+" format options{{{
+" Break line without break the word.
+set linebreak
+
+let &showbreak='➣➣  \'
+set formatoptions+=n
+set formatoptions+=2
+set formatoptions+=w
+set formatoptions+=t
+set formatoptions+=q
+set formatoptions+=l
+set formatoptions+=j
+au FileType vim setlocal fo-=r fo-=o
+set formatoptions-=r
+set formatoptions-=o
+"}}}
 
 " neocomplete {{{
 if neocomplete
