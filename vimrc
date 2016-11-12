@@ -10,6 +10,8 @@ set clipboard=unnamedplus
 
 filetype plugin indent on
 
+
+" indent and tabs {{{
 set autoindent  " use indentation of previous line
 set smartindent  " use intelligent indentation for C
 " Each new line will be automatically indented the correct amount according to
@@ -21,7 +23,7 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 set expandtab
-
+"}}}
 set foldmethod=marker
 set backspace=2
 
@@ -49,12 +51,13 @@ Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 
+Plug 'Shougo/unite.vim'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'spiiph/vim-space'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'tpope/vim-fugitive' | Plug 'gregsexton/gitv', { 'on': ['Gitv', 'Gitv!']}
+Plug 'tpope/vim-fugitive' | Plug 'gregsexton/gitv', { 'on': ['Gitv']}
 Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
@@ -94,6 +97,7 @@ let &bex = '~' . substitute(expand('%:p'), '/', '%', 'g')
 set backupdir=~/.vim/.backup//
 set undofile
 set undodir=~/.vim/.undo//  " ending with `//` creates unique names
+
 " display incomplete commands
 set showcmd
 set wildmenu
@@ -101,10 +105,12 @@ set wildmode=longest,full
 set wildignore+=*.pyc,__cache__,*.o,*.obj
 set noshowmode
 
+" search {{{
 set incsearch
 set hlsearch
 set ignorecase
 set smartcase
+"}}}
 
 "sometimes increases performance
 set lazyredraw " can lead to problems with splits?
@@ -202,6 +208,8 @@ endif
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
+
+" Plug-ins {{{
 
 " neocomplete {{{
 if neocomplete
@@ -396,4 +404,6 @@ let g:ipython_greedy_matching = 1
 let g:ipy_cell_folding = 1
 let g:ipython_dictionary_completion = 1
 let g:ipy_monitor_subchannel = 1
+"}}}
+
 "}}}
