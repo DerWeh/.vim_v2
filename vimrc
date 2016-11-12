@@ -52,7 +52,7 @@ Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 
 Plug 'Shougo/unite.vim'
-      \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session' | Plug 'ujihisa/unite-colorscheme' | Plug 'Shougo/unite-help'
+      \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session' | Plug 'ujihisa/unite-colorscheme' | Plug 'Shougo/unite-help' | Plug 'osyo-manga/unite-quickfix' | Plug 'Shougo/neomru.vim'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -144,7 +144,7 @@ nmap <C-w>r <Plug>(golden_ratio_resize)
 nmap <C-w>f <C-w><Bar><C-w>_
 
 "Unite mappings
-nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert file_rec/async:!<cr>
+nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert file_rec/async file_mru:!<cr>
 nnoremap <space>/ :Unite -no-empty -no-resize grep<cr>
 nnoremap <space>s :Unite -quick-match buffer<cr>
 " }}}
