@@ -63,6 +63,9 @@ Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 
+Plug 'Shougo/unite.vim'
+      \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session' | Plug 'ujihisa/unite-colorscheme'
+      \ | Plug 'Shougo/unite-help' | Plug 'osyo-manga/unite-quickfix' | Plug 'Shougo/neomru.vim'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -125,7 +128,7 @@ map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 map <C-n> :nohl<CR>
 
 " Plug-in mapping{{{
-nnoremap <silent> <C-p> :CtrlP<CR>
+nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nmap <leader>tc <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
@@ -136,6 +139,14 @@ nmap <Leader>ws <Plug>VimwikiUISelect
 nmap tree <Plug>NERDTreeTabsToggle<CR>
 nmap <C-w>r <Plug>(golden_ratio_resize)
 nmap <C-w>f <C-w><Bar><C-w>_
+
+"Unite mappings
+" generate unite prefix, nmap ? [unite] can use it then
+nnoremap [unite] <Nop>
+nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
+      \ file_rec/async file_mru bookmark:!<cr>
+nnoremap <space>/ :Unite -no-empty -no-resize grep<cr>
+nnoremap <space>s :Unite -quick-match buffer<cr>
 " }}}
 
 
@@ -217,6 +228,8 @@ au FileType vim setlocal fo-=r fo-=o
 set formatoptions-=r
 set formatoptions-=o
 "}}}
+
+" Plug-ins {{{
 
 " neocomplete {{{
 if neocomplete
@@ -411,4 +424,48 @@ let g:ipython_greedy_matching = 1
 let g:ipy_cell_folding = 1
 let g:ipython_dictionary_completion = 1
 let g:ipy_monitor_subchannel = 1
+"}}}
+
+"Unite{{{
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  imap <buffer> <C-n>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+
+  nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
+  nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+
+  nmap <silent><buffer><expr> Enter unite#do_action('switch')
+  nmap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+  nmap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
+  nmap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
+
+  imap <silent><buffer><expr> Enter unite#do_action('switch')
+  imap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+  imap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
+  imap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
+
+  nmap <buffer> <C-g> <Plug>(unite_toggle_auto_preview)
+
+  nmap <buffer> <ESC> :UniteClose<cr>
+  nnoremap <silent><buffer><expr> cd unite#do_action('lcd')
+  nmap <buffer> <C-z> <Plug>(unite_toggle_transpose_window)
+  nmap <buffer><silent> <c-r> <Plug>(unite_redraw)
+endfunction
+
+call unite#custom#profile('default', 'context', {
+\   'direction': 'botright',
+\ })
+call unite#custom#profile('outline', 'context', {'direction': 'topleft'})
+
+call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+      \ 'ignore_pattern', join([
+      \ '\.git/',
+      \ '__cache__/',
+      \ '\.undo',
+      \ '\.backup',
+      \ ], '\|'))
+"}}}
+
 "}}}
