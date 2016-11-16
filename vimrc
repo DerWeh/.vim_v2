@@ -145,8 +145,8 @@ nmap <C-w>f <C-w><Bar><C-w>_
 nnoremap [unite] <Nop>
 nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
       \ file_rec/async file_mru bookmark:!<cr>
-nnoremap <space>/ :Unite -no-empty -no-resize grep<cr>
-nnoremap <space>s :Unite -quick-match buffer<cr>
+nnoremap <space>/ :Unite -buffer-name=grep -no-empty -no-resize grep<cr>
+nnoremap <space>s :Unite -buffer-name=buffers -quick-match buffer<cr>
 " }}}
 
 
