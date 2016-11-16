@@ -28,6 +28,7 @@ set showcmd
 set wildmenu wildmode=longest,full
 set wildignore+=*.pyc,__cache__,*.o,*.obj
 set noshowmode
+set autoread
 
 set incsearch hlsearch ignorecase smartcase
 
@@ -91,7 +92,7 @@ Plug 'DerWeh/vim-ipython', {'for': 'python', 'on': ['IPython', 'IPythonNew']}
 call plug#end()
 " }}}
 
-" color settings"{{{
+" color settings{{{
 " turn syntax highlighting on
 set t_Co=256
 syntax on
@@ -114,7 +115,38 @@ syntax sync maxlines=260
 set synmaxcol=800
 " }}}
 
+fu! CustomFoldText()
+  "get first non-blank line
+  let fs = v:foldstart
+  while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+  endwhile
+  if fs > v:foldend
+    let line = getline(v:foldstart)
+  else
+    let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+  endif
+
+  "strip foldmarkers
+  let markexpr = escape(substitute(&foldmarker, ',', '|', 'g'),'{')
+  " TODO: check comment sing for filetype
+  let whitespace = '^["|#]\s*|\s*$'
+  let strip_line = substitute(line, '\v'.markexpr.'|'.whitespace, "", 'g')
+  let strip_line = substitute(strip_line, '\v'.whitespace, "", 'g')
+  let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+  let foldSize = 1 + v:foldend - v:foldstart
+  let foldSizeStr = " " . foldSize . " lines "
+  let foldLevelStr = repeat("+--", v:foldlevel)
+  let lineCount = line("$")
+  let foldPercentage = printf("[%.1f", (foldSize*1.0)/lineCount*100) . "%] "
+  let expansionString = repeat(".", w - strwidth(foldSizeStr.strip_line.foldLevelStr.foldPercentage))
+  return '<'.strip_line.'>' . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+endf
+set foldtext=CustomFoldText()
+
 " key mappings {{{
+" use Python regular expressions
+nnoremap / /\v
+vnoremap / /\v
 
 " in normal mode F2 will save the file
 nmap <F2> :w<CR>
