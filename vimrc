@@ -19,6 +19,26 @@ set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 set foldmethod=marker
 set backspace=2
 
+set writebackup
+let &bex = '~' . substitute(expand('%:p'), '/', '%', 'g')
+set backup backupdir=~/.vim/.backup//
+set undofile undodir=~/.vim/.undo//  " ending with `//` creates unique names
+" display incomplete commands
+set showcmd
+set wildmenu wildmode=longest,full
+set wildignore+=*.pyc,__cache__,*.o,*.obj
+set noshowmode
+
+set incsearch hlsearch ignorecase smartcase
+
+set omnifunc=syntaxcomplete#Complete
+set completeopt=menu,preview,longest
+
+"sometimes increases performance
+set lazyredraw " can lead to problems with splits?
+set ttyfast
+
+let &colorcolumn="80,".join(range(120,999),",")
 
 " Plug-in management {{{
 call plug#begin('~/.vim/plugged')
@@ -53,6 +73,7 @@ Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
+Plug 'tpope/vim-speeddating'
 
 Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -81,27 +102,6 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 " highlight matching braces
 set showmatch
 "}}}
-
-set writebackup
-let &bex = '~' . substitute(expand('%:p'), '/', '%', 'g')
-set backup backupdir=~/.vim/.backup//
-set undofile undodir=~/.vim/.undo//  " ending with `//` creates unique names
-" display incomplete commands
-set showcmd
-set wildmenu wildmode=longest,full
-set wildignore+=*.pyc,__cache__,*.o,*.obj
-set noshowmode
-
-set incsearch hlsearch ignorecase smartcase
-
-set omnifunc=syntaxcomplete#Complete
-set completeopt=menu,preview,longest
-
-"sometimes increases performance
-set lazyredraw " can lead to problems with splits?
-set ttyfast
-
-let &colorcolumn="80,".join(range(120,999),",")
 
 " Speed up syntax highlighting {{{
 set nocursorcolumn
