@@ -1,26 +1,20 @@
 " VIM Configuration File
 
 " set UTF-8 encoding
-set enc=utf-8
-set fenc=utf-8
-set termencoding=utf-8
+set enc=utf-8 fenc=utf-8 termencoding=utf-8
 set nocompatible
 
 set clipboard=unnamedplus
 
 filetype plugin indent on
 
-set autoindent  " use indentation of previous line
-set smartindent  " use intelligent indentation for C
+set autoindent smartindent  " use indentation of previous line
 " Each new line will be automatically indented the correct amount according to
 " the C indentation standard.
 set cindent
 
 " configure tabwidth and insert spaces instead of tabs
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
-set expandtab
+set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
 
 set foldmethod=marker
 set backspace=2
@@ -88,34 +82,33 @@ au InsertLeave * match ExtraWhitespace /\s\+$/
 set showmatch
 "}}}
 
-set backup
 set writebackup
 let &bex = '~' . substitute(expand('%:p'), '/', '%', 'g')
-set backupdir=~/.vim/.backup//
-set undofile
-set undodir=~/.vim/.undo//  " ending with `//` creates unique names
+set backup backupdir=~/.vim/.backup//
+set undofile undodir=~/.vim/.undo//  " ending with `//` creates unique names
 " display incomplete commands
 set showcmd
-set wildmenu
-set wildmode=longest,full
+set wildmenu wildmode=longest,full
 set wildignore+=*.pyc,__cache__,*.o,*.obj
 set noshowmode
 
-set incsearch
-set hlsearch
-set ignorecase
-set smartcase
+set incsearch hlsearch ignorecase smartcase
+
+set omnifunc=syntaxcomplete#Complete
+set completeopt=menu,preview,longest
 
 "sometimes increases performance
 set lazyredraw " can lead to problems with splits?
 set ttyfast
+
+let &colorcolumn="80,".join(range(120,999),",")
+
 " Speed up syntax highlighting {{{
 set nocursorcolumn
-set nocursorline
 syntax sync minlines=100
 syntax sync maxlines=260
 " Don't try to highlight lines longer than 800 characters, in order to speed up the viewport.
-set synmaxcol=900
+set synmaxcol=800
 " }}}
 
 " key mappings {{{
@@ -207,10 +200,6 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r ++edit# | 0d_ | diffthis
             \ | wincmd p | diffthis
 endif
-
-filetype plugin indent on
-set omnifunc=syntaxcomplete#Complete
-set completeopt=menu,preview,longest
 
 " format options{{{
 " Break line without break the word.
