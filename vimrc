@@ -492,6 +492,15 @@ function! s:unite_settings()
   nmap <buffer><silent> <c-r> <Plug>(unite_redraw)
 endfunction
 
+if executable('ag') == 1
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_rec_async_command =
+    \ ['ag', '--follow --nocolor --nogroup --hidden -g ""']
+  let g:unite_source_grep_default_opts =
+	  \ '-i --vimgrep --hidden --ignore ' .
+	  \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+endif
+
 call unite#custom#profile('default', 'context', {
 \   'direction': 'botright',
 \ })
