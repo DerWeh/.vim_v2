@@ -49,8 +49,6 @@ endfunction
 
 " Make sure you use single quotes
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeTabsTogglem', '<Plug>NERDTreeTabsToggle'] } | Plug 'Xuyuanp/nerdtree-git-plugin' | Plug 'jistr/vim-nerdtree-tabs'
-Plug 'ctrlpvim/ctrlp.vim', { 'on':  ['CtrlP', 'CtrlPMixed', 'CtrlPMRU']}
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
 Plug 'chrisbra/vim-diff-enhanced', { 'on': ['PatienceDiff', 'EnhancedDiff']}
 let neocomplete = !(v:version < 703 || !has('lua') || (v:version == 703 && !has('patch885')))
@@ -77,6 +75,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'tpope/vim-speeddating'
+Plug 'Shougo/vimfiler.vim'
 
 Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -108,8 +107,7 @@ set showmatch
 
 " Speed up syntax highlighting {{{
 set nocursorcolumn
-syntax sync minlines=100
-syntax sync maxlines=260
+syntax sync minlines=100 maxlines=260
 " Don't try to highlight lines longer than 800 characters, in order to speed up the viewport.
 set synmaxcol=800
 " }}}
@@ -129,6 +127,7 @@ map <C-n> :nohl<CR>
 
 " Plug-in mapping{{{
 nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
+nmap <leader>fe :VimFilerExplorer<CR>
 nmap <leader>tc <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
@@ -136,7 +135,6 @@ nmap <silent> <Leader>pd <Plug>(pydocstring)
 nmap <Leader>ww <Plug>VimwikiIndex
 nmap <Leader>wt <Plug>VimwikiTabIndex
 nmap <Leader>ws <Plug>VimwikiUISelect
-nmap tree <Plug>NERDTreeTabsToggle<CR>
 nmap <C-w>r <Plug>(golden_ratio_resize)
 nmap <C-w>f <C-w><Bar><C-w>_
 
@@ -392,11 +390,6 @@ endif
 let g:tagbar_sort = 0
 " }}}
 
-" NerdTree {{{
-let g:nerdtree_tabs_open_on_gui_startup = 2
-let g:nerdtree_tabs_open_on_console_startup = 2
-" }}}
-
 " Golden-Ratio {{{
 let g:golden_ratio_autocommand = 0
 let g:golden_ratio_exclude_nonmodifiable = 1
@@ -466,6 +459,15 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ '\.undo',
       \ '\.backup',
       \ ], '\|'))
+"}}}
+
+" VimFiler {{{
+let g:vimfiler_as_default_explorer = 1
+call vimfiler#custom#profile('explorer', 'context', {
+      \  'safe': 0,
+      \  'simple': 0
+      \ })
+
 "}}}
 
 "}}}
