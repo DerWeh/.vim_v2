@@ -29,6 +29,7 @@ set wildmenu wildmode=longest,full
 set wildignore+=*.pyc,__cache__,*.o,*.obj
 set noshowmode
 set autoread
+set visualbell noerrorbells
 
 set incsearch hlsearch ignorecase smartcase
 
