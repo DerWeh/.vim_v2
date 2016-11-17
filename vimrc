@@ -115,6 +115,7 @@ syntax sync maxlines=260
 set synmaxcol=800
 " }}}
 
+" foldtext{{{
 fu! CustomFoldText()
   "get first non-blank line
   let fs = v:foldstart
@@ -128,10 +129,11 @@ fu! CustomFoldText()
 
   "strip foldmarkers
   let markexpr = escape(substitute(&foldmarker, ',', '|', 'g'),'{')
-  " TODO: check comment sing for filetype
-  let whitespace = '^["|#]\s*|\s*$'
+  " TODO: check comment sing for filetype, add first line if comment
+  let whitespace = '(\w\s*)?["|#]\s*|\s*$'
   let strip_line = substitute(line, '\v'.markexpr.'|'.whitespace, "", 'g')
   let strip_line = substitute(strip_line, '\v'.whitespace, "", 'g')
+  let strip_line = substitute(strip_line, '\v^(\s*)', '\1<', '').'>'
   let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
   let foldSize = 1 + v:foldend - v:foldstart
   let foldSizeStr = " " . foldSize . " lines "
@@ -139,9 +141,10 @@ fu! CustomFoldText()
   let lineCount = line("$")
   let foldPercentage = printf("[%.1f", (foldSize*1.0)/lineCount*100) . "%] "
   let expansionString = repeat(".", w - strwidth(foldSizeStr.strip_line.foldLevelStr.foldPercentage))
-  return '<'.strip_line.'>' . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+  return strip_line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
 endf
 set foldtext=CustomFoldText()
+"}}}
 
 " key mappings {{{
 " use Python regular expressions
