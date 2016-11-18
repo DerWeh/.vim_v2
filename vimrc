@@ -217,29 +217,36 @@ nmap > >gv
 " goto definition with F12
 map <F12> <C-]>
 " in diff mode we use the spell check keys for merging
-set diffopt=vertical
-if &diff
-  " diff settings
-  map <M-Down> ]c
-  map <M-Up> [c
-  map <M-Left> do
-  map <M-Right> dp
-else
-  " spell settings
-  set spell
-  :setlocal spell spelllang=en
-  " set the spellfile - folders must exist
-  set spellfile=~/.vim/spellfile.add
-  map <M-Down> ]s
-  map <M-Up> [s
-endif
 "}}}
 
 " go to last cursor position upon opening files
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
+        \| exe "normal! g'\"" | endif
 endif
+
+set diffopt=vertical
+
+setl spell spelllang=en_us
+nmap <M-Down> ]s
+nmap <M-Up> [s
+
+if has("autocmd")
+  au BufAdd * call s:diff_lang_settings()
+endif
+function! s:diff_lang_settings() "{{{
+if &diff
+  nmap <M-Down> ]c
+  nmap <M-Up> [c
+  setl nospell
+elseif &readonly
+  setl nospell
+else
+  setl spell spelllang=en_us
+  nmap <M-Down> ]s
+  nmap <M-Up> [s
+endif
+endfunction "}}}
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -291,10 +298,10 @@ if neocomplete
           \ <SID>check_back_space() ? '<S-TAB>' :
           \ neocomplete#start_manual_complete()
 
-    function! s:check_back_space() "{{{
-      let col = col('.') - 1
-      return !col || getline('.')[col - 1]  =~ '\s'
-    endfunction"}}}
+  function! s:check_back_space() "{{{
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction"}}}
   let g:neocomplete#enable_auto_delimiter = 1
   " let g:neocomplete#enable_auto_select = 1
   " Search from neocomplete, omni candidates, vim keywords.
