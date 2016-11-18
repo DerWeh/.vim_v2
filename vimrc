@@ -77,7 +77,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'tpope/vim-speeddating'
-Plug 'Shougo/vimfiler.vim'
+Plug 'Shougo/vimfiler.vim' | Plug 'romgrk/vimfiler-prompt', { 'on' : 'VimFilerPrompt', 'for' : 'vimfiler'}
 
 Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -514,7 +514,7 @@ call vimfiler#custom#profile('explorer', 'context', {
       \  'safe': 0,
       \  'simple': 0
       \ })
-
+autocmd FileType vimfiler nmap <buffer> i :VimFilerPrompt<CR>
 "}}}
 
 "}}}
