@@ -4,7 +4,7 @@
 set enc=utf-8 fenc=utf-8 termencoding=utf-8
 set nocompatible
 
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 
 filetype plugin indent on
 
@@ -151,6 +151,7 @@ nnoremap / /\v
 vnoremap / /\v
 
 cnoremap w!! w !sudo tee % >/dev/null
+nmap Q <Nop>     " Remove mapping for `Ex` mode
 
 " in normal mode F2 will save the file
 nmap <F2> :w<CR>
@@ -256,8 +257,8 @@ if !exists(":DiffOrig")
 endif
 
 " format options{{{
-" Break line without break the word.
-set linebreak
+set textwidth=0
+set linebreak  " Break line without break the word.
 
 let &showbreak='➣➣  \'
 set formatoptions+=n
