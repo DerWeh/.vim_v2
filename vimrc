@@ -151,6 +151,7 @@ set foldtext=CustomFoldText()
 nnoremap / /\v
 vnoremap / /\v
 
+nmap Q <Nop>
 cnoremap w!! w !sudo tee % >/dev/null
 
 " in normal mode F2 will save the file
