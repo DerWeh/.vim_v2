@@ -514,6 +514,8 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ '\.undo',
       \ '\.backup',
       \ ], '\|'))
+call unite#custom#source('files,file,file/new,buffer,file_rec,file_rec/async,file_mru', 'matchers', 'matcher_fuzzy')
+
 "}}}
 
 " VimFiler {{{
