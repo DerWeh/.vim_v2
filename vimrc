@@ -64,6 +64,7 @@ Plug 'tpope/vim-speeddating', {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatin
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
+Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'Shougo/unite.vim'
       \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session' | Plug 'ujihisa/unite-colorscheme'
