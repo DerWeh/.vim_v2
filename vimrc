@@ -58,6 +58,8 @@ Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' 
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
+Plug 'tpope/vim-speeddating', {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatingUp', '<Plug>SpeedDatingNowLocal', '<Plug>SpeedDatingNowUTC']}
+
 " Python
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
@@ -76,7 +78,6 @@ Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'tpope/vim-speeddating'
 Plug 'Shougo/vimfiler.vim' | Plug 'romgrk/vimfiler-prompt', { 'on' : 'VimFilerPrompt', 'for' : 'vimfiler'}
 
 Plug 'easymotion/vim-easymotion'
@@ -495,7 +496,7 @@ endfunction
 if executable('ag') == 1
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_rec_async_command =
-        \ ['ag', '--follow --nocolor --nogroup --hidden -g ""']
+        \['ag', '--follow', '--nocolor', '--hidden', '-g', '']
   let g:unite_source_grep_default_opts =
         \ '-i --vimgrep --hidden --ignore ' .
         \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
