@@ -234,7 +234,7 @@ nmap <M-Down> ]s
 nmap <M-Up> [s
 
 if has("autocmd")
-  au BufAdd * call s:diff_lang_settings()
+  au BufAdd,BufNewFile,BufRead * call s:diff_lang_settings()
 endif
 function! s:diff_lang_settings() "{{{
 if &diff
