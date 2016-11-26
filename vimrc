@@ -187,6 +187,9 @@ nmap <C-w>f <C-w><Bar><C-w>_
 " generate unite prefix, nmap ? [unite] can use it then
 nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nnoremap [unite] <Nop>
+nmap \u [unite]
+nmap [unite] :Unite 
+nmap [unite]b :Unite -buffer-name=bookmark bookmark<cr>
 nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
       \ file_rec/async file_mru bookmark:!<cr>
 nnoremap <space>/ :Unite -buffer-name=grep -no-empty -no-resize grep<cr>
