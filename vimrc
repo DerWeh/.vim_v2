@@ -59,6 +59,7 @@ Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
 Plug 'tpope/vim-speeddating', {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatingUp', '<Plug>SpeedDatingNowLocal', '<Plug>SpeedDatingNowUTC']}
+Plug 'dhruvasagar/vim-table-mode' " , {'on': ['TableModeToggle', 'TableModeEnable', 'Tableize']}
 
 " Python
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
@@ -171,9 +172,8 @@ map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 map <C-n> :nohl<CR>
 
 " Plug-in mapping{{{
-nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nmap <leader>fe :VimFilerExplorer<CR>
-nmap <leader>tc <Plug>Colorizer
+nmap <leader>ct <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
 nmap <silent> <Leader>pd <Plug>(pydocstring)
@@ -185,6 +185,7 @@ nmap <C-w>f <C-w><Bar><C-w>_
 
 "Unite mappings
 " generate unite prefix, nmap ? [unite] can use it then
+nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nnoremap [unite] <Nop>
 nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
       \ file_rec/async file_mru bookmark:!<cr>
