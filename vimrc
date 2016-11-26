@@ -148,6 +148,10 @@ set foldtext=CustomFoldText()
 "}}}
 
 " key mappings {{{
+" faster `commands` using ;
+nnoremap ; :
+vnoremap ; :
+
 " use Python regular expressions
 nnoremap / /\v
 vnoremap / /\v
