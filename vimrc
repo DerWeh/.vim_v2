@@ -58,7 +58,7 @@ Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' 
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
-Plug 'tpope/vim-speeddating', {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatingUp', '<Plug>SpeedDatingNowLocal', '<Plug>SpeedDatingNowUTC']}
+Plug 'tpope/vim-speeddating' " , {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatingUp', '<Plug>SpeedDatingNowLocal', '<Plug>SpeedDatingNowUTC']}
 Plug 'dhruvasagar/vim-table-mode' " , {'on': ['TableModeToggle', 'TableModeEnable', 'Tableize']}
 
 " Python
@@ -190,6 +190,7 @@ nnoremap [unite] <Nop>
 nmap \u [unite]
 nmap [unite] :Unite 
 nmap [unite]b :Unite -buffer-name=bookmark bookmark<cr>
+nmap [unite]/ :Unite -buffer-name=search line:forward -start-insert -no-quit -custom-line-enable-highlight<CR>
 nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
       \ file_rec/async file_mru bookmark:!<cr>
 nnoremap <space>/ :Unite -buffer-name=grep -no-empty -no-resize grep<cr>
@@ -540,6 +541,10 @@ let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
 " let g:vimfiler_file_icon = '-'
 " let g:vimfiler_marked_file_icon = '*'
+"}}}
+
+" Vim-Space{{{
+let g:space_no_character_movements = 1
 "}}}
 
 "}}}
