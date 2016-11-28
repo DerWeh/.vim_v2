@@ -58,14 +58,19 @@ Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' 
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
+Plug 'tpope/vim-speeddating' " , {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatingUp', '<Plug>SpeedDatingNowLocal', '<Plug>SpeedDatingNowUTC']}
+Plug 'dhruvasagar/vim-table-mode' " , {'on': ['TableModeToggle', 'TableModeEnable', 'Tableize']}
+
 " Python
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
+Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'Shougo/unite.vim'
       \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session' | Plug 'ujihisa/unite-colorscheme'
       \ | Plug 'Shougo/unite-help' | Plug 'osyo-manga/unite-quickfix' | Plug 'Shougo/neomru.vim'
+      \ | Plug 'kmnk/vim-unite-giti'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -76,7 +81,6 @@ Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'tpope/vim-speeddating'
 Plug 'Shougo/vimfiler.vim' | Plug 'romgrk/vimfiler-prompt', { 'on' : 'VimFilerPrompt', 'for' : 'vimfiler'}
 
 Plug 'easymotion/vim-easymotion'
@@ -146,10 +150,15 @@ set foldtext=CustomFoldText()
 "}}}
 
 " key mappings {{{
+" faster `commands` using ;
+nnoremap ; :
+vnoremap ; :
+
 " use Python regular expressions
 nnoremap / /\v
 vnoremap / /\v
 
+nmap Q <Nop>
 cnoremap w!! w !sudo tee % >/dev/null
 nmap Q <Nop>     " Remove mapping for `Ex` mode
 
@@ -165,9 +174,8 @@ map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 map <C-n> :nohl<CR>
 
 " Plug-in mapping{{{
-nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nmap <leader>fe :VimFilerExplorer<CR>
-nmap <leader>tc <Plug>Colorizer
+nmap <leader>ct <Plug>Colorizer
 map <F8> <Esc>:TagbarToggle<CR>
 nnoremap <silent> <F10> :YRShow<CR>
 nmap <silent> <Leader>pd <Plug>(pydocstring)
@@ -179,7 +187,12 @@ nmap <C-w>f <C-w><Bar><C-w>_
 
 "Unite mappings
 " generate unite prefix, nmap ? [unite] can use it then
+nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nnoremap [unite] <Nop>
+nmap \u [unite]
+nmap [unite] :Unite 
+nmap [unite]b :Unite -buffer-name=bookmark bookmark<cr>
+nmap [unite]/ :Unite -buffer-name=search line:forward -start-insert -no-quit -custom-line-enable-highlight<CR>
 nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
       \ file_rec/async file_mru bookmark:!<cr>
 nnoremap <space>/ :Unite -buffer-name=grep -no-empty -no-resize grep<cr>
@@ -233,7 +246,7 @@ nmap <M-Down> ]s
 nmap <M-Up> [s
 
 if has("autocmd")
-  au BufAdd * call s:diff_lang_settings()
+  au BufAdd,BufNewFile,BufRead * call s:diff_lang_settings()
 endif
 function! s:diff_lang_settings() "{{{
 if &diff
@@ -496,7 +509,7 @@ endfunction
 if executable('ag') == 1
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_rec_async_command =
-        \ ['ag', '--follow --nocolor --nogroup --hidden -g ""']
+        \['ag', '--follow', '--nocolor', '--hidden', '-g', '']
   let g:unite_source_grep_default_opts =
         \ '-i --vimgrep --hidden --ignore ' .
         \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
@@ -514,6 +527,8 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ '\.undo',
       \ '\.backup',
       \ ], '\|'))
+call unite#custom#source('files,file,file/new,buffer,file_rec,file_rec/async,file_mru', 'matchers', 'matcher_fuzzy')
+
 "}}}
 
 " VimFiler {{{
@@ -528,6 +543,10 @@ let g:vimfiler_tree_opened_icon = '▾'
 let g:vimfiler_tree_closed_icon = '▸'
 " let g:vimfiler_file_icon = '-'
 " let g:vimfiler_marked_file_icon = '*'
+"}}}
+
+" Vim-Space{{{
+let g:space_no_character_movements = 1
 "}}}
 
 "}}}
