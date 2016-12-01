@@ -32,6 +32,7 @@ set autoread
 set visualbell noerrorbells
 
 set incsearch hlsearch ignorecase smartcase
+set hidden
 
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
@@ -150,28 +151,20 @@ set foldtext=CustomFoldText()
 "}}}
 
 " key mappings {{{
-" faster `commands` using ;
-nnoremap ; :
-vnoremap ; :
+nnoremap ; :|  " faster `commands` using ;
+vnoremap ; :|  " faster `commands` using ;
 
-" use Python regular expressions
-nnoremap / /\v
-vnoremap / /\v
+nnoremap / /\v|  " use Python regular expressions
+vnoremap / /\v|  " use Python regular expressions
 
-nmap Q <Nop>
 cnoremap w!! w !sudo tee % >/dev/null
-nmap Q <Nop>     " Remove mapping for `Ex` mode
+nmap Q <Nop>|  " Remove mapping for `Ex` mode
 
-" in normal mode F2 will save the file
-nmap <F2> :w<CR>
-" in insert mode F2 will exit insert, save, enters insert again
-imap <F2> <ESC>:w<CR><Space>i
-" toggle paste mode for pasting code without intend
-set pastetoggle=<F3>
-" switch between header/source with F4
-map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-" Remove highlight from search results
-map <C-n> :nohl<CR>
+nmap <F2> :w<CR>|  " in normal mode F2 will save the file
+imap <F2> <ESC>:w<CR><Space>i|  " in insert mode F2 will exit insert, save, enters insert again
+set pastetoggle=<F3>|  " toggle paste mode for pasting code without intend
+map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>|  " switch between header/source with F4
+map <C-n> :nohl<CR>|  " Remove highlight from search results
 
 " Plug-in mapping{{{
 nmap <leader>fe :VimFilerExplorer<CR>
@@ -190,7 +183,7 @@ nmap <C-w>f <C-w><Bar><C-w>_
 nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nnoremap [unite] <Nop>
 nmap \u [unite]
-nmap [unite] :Unite 
+nmap [unite] :Unite |
 nmap [unite]b :Unite -buffer-name=bookmark bookmark<cr>
 nmap [unite]/ :Unite -buffer-name=search line:forward -start-insert -no-quit -custom-line-enable-highlight<CR>
 nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
@@ -211,7 +204,7 @@ nnoremap c<C-h> :lefta vsp new<cr>
 nnoremap c<C-l> :rightb vsp new<cr>
 nnoremap g<C-j> <C-w>j:let &winheight = &lines * 7 / 10<cr>
 nnoremap g<C-k> <C-w>k:let &winheight = &lines * 7 / 10<cr>
-nnoremap g<C-h> <C-w>h<C-w>_
+onoremap g<C-h> <C-w>h<C-w>_
 nnoremap g<C-l> <C-w>l<C-w>_
 nnoremap d<C-j> <C-w>j<C-w>c
 nnoremap d<C-k> <C-w>k<C-w>c
@@ -228,9 +221,7 @@ nmap < <gv
 vmap > >gv
 nmap > >gv
 
-" goto definition with F12
-map <F12> <C-]>
-" in diff mode we use the spell check keys for merging
+map <F12> <C-]>|  " goto definition with F12
 "}}}
 
 " go to last cursor position upon opening files
@@ -348,7 +339,7 @@ endif
 " YankRing {{{
 " don't populate yank ring with singe elements
 let g:yankring_min_element_length = 2
-let g:yankring_record_insert = 1
+" let g:yankring_record_insert = 1
 " only works if you have Vim with clipboard support
 let g:yankring_manual_clipboard_check = 1
 let g:yankring_replace_n_nkey = '<S-tab>'
@@ -467,7 +458,7 @@ let g:ConqueTerm_SendVisKey = '<Leader><F9>'
 "}}}
 
 "VimWiki {{{
-let g:vimwiki_folding = 'expr'
+" let g:vimwiki_folding = 'expr'
 let g:vimwiki_table_mappings = 0
 "}}}
 
