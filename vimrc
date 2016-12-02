@@ -58,6 +58,7 @@ Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' 
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
+Plug 'thinca/vim-qfreplace' " , { 'on': 'Qfreplace'}
 Plug 'tpope/vim-speeddating' " , {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatingUp', '<Plug>SpeedDatingNowLocal', '<Plug>SpeedDatingNowUTC']}
 Plug 'dhruvasagar/vim-table-mode' " , {'on': ['TableModeToggle', 'TableModeEnable', 'Tableize']}
 
