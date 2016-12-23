@@ -102,12 +102,12 @@ call plug#end()
 " color settings{{{
 " turn syntax highlighting on
 set t_Co=256
-syntax on
 
 set background=light
 colorscheme PaperColor
+syntax enable  " keeps highlighting  ;
 " Show whitespace
-highlight ExtraWhitespace ctermbg=Magenta guibg=#ffafd7
+highlight ExtraWhitespace ctermbg=LightMagenta guibg=#:ffafd7
 au InsertLeave * match ExtraWhitespace /\s\+$/
 
 " highlight matching braces
@@ -219,9 +219,9 @@ map <Leader><S-TAB> <esc>:tabnext<CR>
 
 " Intending codeblocks
 vmap < <gv
-nmap < <gv
+"nmap < <gv
 vmap > >gv
-nmap > >gv
+"nmap > >gv
 
 map <F12> <C-]>|  " goto definition with F12
 "}}}
@@ -232,7 +232,7 @@ if has("autocmd")
         \| exe "normal! g'\"" | endif
 endif
 
-set diffopt=vertical
+set diffopt+=vertical
 
 setl spell spelllang=en_us
 nmap <M-Down> ]s
@@ -333,7 +333,7 @@ if neocomplete
 
   " For conceal markers.
   if has('conceal')
-    set conceallevel=2 concealcursor=niv
+    set conceallevel=2 concealcursor=n
   endif
 endif
 "}}}
@@ -540,6 +540,10 @@ let g:vimfiler_tree_closed_icon = '▸'
 
 " Vim-Space{{{
 let g:space_no_character_movements = 1
+"}}}
+
+" Latex {{{
+let g:tex_conceal= 'adgm'
 "}}}
 
 "}}}
