@@ -32,7 +32,7 @@ set autoread
 set visualbell noerrorbells
 
 set incsearch hlsearch ignorecase smartcase
-set hidden
+"set hidden
 
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
@@ -90,6 +90,7 @@ Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-scripts/argtextobj.vim'
 
 " personal modified
 Plug 'DerWeh/papercolor-theme'
