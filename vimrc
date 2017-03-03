@@ -90,7 +90,10 @@ Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
+
+" text objects
 Plug 'vim-scripts/argtextobj.vim'
+Plug 'michaeljsmith/vim-indent-object'
 
 " personal modified
 Plug 'DerWeh/papercolor-theme'
@@ -164,7 +167,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 nmap Q <Nop>|  " Remove mapping for `Ex` mode
 
 nmap <F2> :w<CR>|  " in normal mode F2 will save the file
-imap <F2> <ESC>:w<CR><Space>i|  " in insert mode F2 will exit insert, save, enters insert again
+imap <F2> <ESC>:w<CR>a|  " in insert mode F2 will exit insert, save, enters insert again
 set pastetoggle=<F3>|  " toggle paste mode for pasting code without intend
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>|  " switch between header/source with F4
 map <C-n> :nohl<CR>|  " Remove highlight from search results
