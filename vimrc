@@ -70,7 +70,7 @@ Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
 Plug 'Shougo/unite.vim'
-      \ | Plug 'Shougo/unite-outline' | Plug 'chemzqm/unite-session' | Plug 'ujihisa/unite-colorscheme'
+      \ | Plug 'Shougo/unite-outline' | Plug 'Shougo/unite-session' | Plug 'ujihisa/unite-colorscheme'
       \ | Plug 'Shougo/unite-help' | Plug 'osyo-manga/unite-quickfix' | Plug 'Shougo/neomru.vim'
       \ | Plug 'kmnk/vim-unite-giti'
 Plug 'thinca/vim-qfreplace'
