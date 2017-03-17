@@ -141,7 +141,7 @@ call plug#end()
 " color settings{{{
 set t_Co=256                       " turn syntax highlighting on
 set background=light
-colorscheme PaperColor    
+colorscheme PaperColor
 syntax enable                      " keeps highlighting  ;
 highlight ExtraWhitespace ctermbg=LightRed guibg=#:ffafd7
 au InsertLeave * match ExtraWhitespace /\s\+$/
@@ -206,7 +206,7 @@ nmap <F2> :w<CR>|  " in normal mode F2 will save the file
 imap <F2> <C-o>:w<CR>|  " in insert mode F2 will exit insert, save, enters insert again
 set pastetoggle=<F3>|  " toggle paste mode for pasting code without intend
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>|  " switch between header/source with F4
-map <C-n> :nohl<CR>|  " Remove highlight from search results
+map <C-h> :nohl<CR>|  " Remove highlight from search results
 
 " -------------------- Plugin Mappings ---------------
 " Plug-in mapping{{{
@@ -376,8 +376,8 @@ let g:yankring_min_element_length = 2
 " let g:yankring_record_insert = 1
 " only works if you have Vim with clipboard support
 let g:yankring_manual_clipboard_check = 1
-let g:yankring_replace_n_nkey = '<S-tab>'
-let g:yankring_replace_n_pkey = '<tab>'
+let g:yankring_replace_n_nkey = '<C-n>'
+let g:yankring_replace_n_pkey = '<C-p>'
 "}}}
 
 " colorize {{{
