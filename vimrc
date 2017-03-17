@@ -87,6 +87,7 @@ Plug 'vim-scripts/YankRing.vim'
 Plug 'Shougo/vimfiler.vim' | Plug 'romgrk/vimfiler-prompt', { 'on' : 'VimFilerPrompt', 'for' : 'vimfiler'}
 Plug 'henrik/vim-indexed-search'
 Plug 'vim-scripts/SearchComplete'
+Plug 'vim-scripts/TagHighlight'
 
 Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -229,11 +230,7 @@ map <Leader><S-TAB> <esc>:tabnext<CR>
 
 " Intending codeblocks
 vmap < <gv
-"nmap < <gv
 vmap > >gv
-"nmap > >gv
-
-map <F12> <C-]>|  " goto definition with F12
 "}}}
 
 " go to last cursor position upon opening files
