@@ -85,6 +85,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'Shougo/vimfiler.vim' | Plug 'romgrk/vimfiler-prompt', { 'on' : 'VimFilerPrompt', 'for' : 'vimfiler'}
+Plug 'henrik/vim-indexed-search'
+Plug 'vim-scripts/SearchComplete'
 
 Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -92,8 +94,10 @@ Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
 
 " text objects
+Plug 'kana/vim-textobj-user'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'michaeljsmith/vim-indent-object'
+Plug 'glts/vim-textobj-comment'
 
 " personal modified
 Plug 'DerWeh/papercolor-theme'
