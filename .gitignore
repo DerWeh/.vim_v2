@@ -5,3 +5,5 @@ tags
 # ignore undo history and backups
 .undo/%*
 .backup/*~*
+# ignore plug-ins handled by `Plug`
+plugged/*
