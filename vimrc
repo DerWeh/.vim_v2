@@ -4,35 +4,59 @@
 set enc=utf-8 fenc=utf-8 termencoding=utf-8
 set nocompatible
 
-set clipboard+=unnamedplus
 
+" ================ General Config ====================
+set showcmd                     "Show incomplete cmds down the bottom
+set noshowmode                  "Don't show current mode down the bottom
+set autoread                    "Reload files changed outside vim
+set visualbell
+set noerrorbells
+set diffopt+=vertical
+
+let mapleader=","
+
+set clipboard+=unnamedplus
 filetype plugin indent on
 
-set autoindent smartindent  " use indentation of previous line
-" Each new line will be automatically indented the correct amount according to
-" the C indentation standard.
-set cindent
 
-" configure tabwidth and insert spaces instead of tabs
-set tabstop=2 shiftwidth=2 softtabstop=2 expandtab
-
-set foldmethod=marker
 set backspace=2
 
+
+" ================ Backup Settings===================
 set writebackup
+if !isdirectory(expand('~').'/.vim/.backup')
+  silent !mkdir ~/.vim/.backup > /dev/null 2>&1
+endif
 let &bex = '~' . substitute(expand('%:p'), '/', '%', 'g')
 set backup backupdir=~/.vim/.backup//
+if !isdirectory(expand('~').'/.vim/.undo')
+  silent !mkdir ~/.vim/backups > /dev/null 2>&1
+endif
 set undofile undodir=~/.vim/.undo//  " ending with `//` creates unique names
-" display incomplete commands
-set showcmd
-set wildmenu wildmode=longest,full
-set wildignore+=*.pyc,__cache__,*.o,*.obj
-set noshowmode
-set autoread
-set visualbell noerrorbells
 
-set incsearch hlsearch ignorecase smartcase
-"set hidden
+
+
+" ================ Indentation ======================
+set autoindent
+set smartindent                 " use indentation of previous line
+set cindent                     " Each new line will be automatically indented the correct amount according to
+                                " the C indentation standard.
+set smarttab
+set tabstop=2 shiftwidth=2 softtabstop=2
+set expandtab
+
+
+" ================ Completion =======================
+set wildmenu
+set wildmode=longest,full
+set wildignore+=*.pyc,__cache__,*.o,*.obj
+
+
+" ================ Search ===========================
+set incsearch
+set hlsearch
+set ignorecase
+set smartcase
 
 set omnifunc=syntaxcomplete#Complete
 set completeopt=menu,preview,longest
@@ -43,6 +67,8 @@ set ttyfast
 
 let &colorcolumn="80,".join(range(120,999),",")
 
+
+" =============== Plug-in Management ==================
 " Plug-in management {{{
 call plug#begin('~/.vim/plugged')
 function! Cond(cond, ...)
@@ -51,7 +77,7 @@ function! Cond(cond, ...)
 endfunction
 
 " Make sure you use single quotes
-" On-demand loading
+" --------------- On-demand loading -------------------
 Plug 'lilydjwg/colorizer', { 'on':  ['<Plug>Colorizer', 'ColorHighlight', 'ColorToggle']}
 Plug 'chrisbra/vim-diff-enhanced', { 'on': ['PatienceDiff', 'EnhancedDiff']}
 let neocomplete = !(v:version < 703 || !has('lua') || (v:version == 703 && !has('patch885')))
@@ -59,21 +85,24 @@ Plug 'Shougo/neocomplete.vim', Cond(neocomplete) | Plug 'Shougo/neosnippet.vim' 
 Plug 'vim-scripts/vimwiki', { 'on': ['<Plug>VimwikiIndex','<Plug>VimwikiTabIndex', '<Plug>VimwikiUISelect']}
 Plug 'wkentaro/conque.vim', {'on': ['ConqueTerm', 'ConqueTermSplit', 'ConqueTermVSplit', 'ConqueTermTab']}
 Plug 'roman/golden-ratio', { 'on': ['<Plug>(golden_ratio_resize)']}
-Plug 'thinca/vim-qfreplace' " , { 'on': 'Qfreplace'}
-Plug 'tpope/vim-speeddating' " , {'on': ['<Plug>SpeedDatingDown', '<Plug>SpeedDatingUp', '<Plug>SpeedDatingNowLocal', '<Plug>SpeedDatingNowUTC']}
-Plug 'dhruvasagar/vim-table-mode' " , {'on': ['TableModeToggle', 'TableModeEnable', 'Tableize']}
 
-" Python
+Plug 'tpope/vim-speeddating'
+Plug 'dhruvasagar/vim-table-mode'
+
+" ------------------- Python --------------------------
 Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
 
+" ------------------- Unite --------------------------
 Plug 'Shougo/unite.vim'
       \ | Plug 'Shougo/unite-outline' | Plug 'Shougo/unite-session' | Plug 'ujihisa/unite-colorscheme'
       \ | Plug 'Shougo/unite-help' | Plug 'osyo-manga/unite-quickfix' | Plug 'Shougo/neomru.vim'
       \ | Plug 'kmnk/vim-unite-giti'
 Plug 'thinca/vim-qfreplace'
+Plug 'Shougo/vimfiler.vim' | Plug 'romgrk/vimfiler-prompt', { 'on' : 'VimFilerPrompt', 'for' : 'vimfiler'}
+
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -84,7 +113,6 @@ Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'Shougo/vimfiler.vim' | Plug 'romgrk/vimfiler-prompt', { 'on' : 'VimFilerPrompt', 'for' : 'vimfiler'}
 Plug 'henrik/vim-indexed-search'
 Plug 'vim-scripts/SearchComplete'
 Plug 'vim-scripts/TagHighlight'
@@ -94,7 +122,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline' |  Plug 'vim-airline/vim-airline-themes'
 
-" text objects
+" ------------------- text objects -------------------
 Plug 'kana/vim-textobj-user'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'michaeljsmith/vim-indent-object'
@@ -108,29 +136,27 @@ Plug 'DerWeh/vim-ipython', {'for': 'python', 'on': ['IPython', 'IPythonNew']}
 call plug#end()
 " }}}
 
+
+" ===================== Color Settings ===============
 " color settings{{{
-" turn syntax highlighting on
-set t_Co=256
-
+set t_Co=256                       " turn syntax highlighting on
 set background=light
-colorscheme PaperColor
-syntax enable  " keeps highlighting  ;
-" Show whitespace
-highlight ExtraWhitespace ctermbg=LightMagenta guibg=#:ffafd7
+colorscheme PaperColor    
+syntax enable                      " keeps highlighting  ;
+highlight ExtraWhitespace ctermbg=LightRed guibg=#:ffafd7
 au InsertLeave * match ExtraWhitespace /\s\+$/
-
-" highlight matching braces
-set showmatch
-"}}}
-
-" Speed up syntax highlighting {{{
+                                   " Show whitespace
+set showmatch                      " highlight matching braces
 set nocursorcolumn
 syntax sync minlines=100 maxlines=260
-" Don't try to highlight lines longer than 800 characters, in order to speed up the view port.
-set synmaxcol=800
+set synmaxcol=800                  " Don't try to highlight lines longer than 800 characters,
+                                   "in order to speed up the view port.
 " }}}
 
+
+" ==================== Folding =======================
 " foldtext{{{
+set foldmethod=marker
 fu! CustomFoldText()
   "get first non-blank line
   let fs = v:foldstart
@@ -144,7 +170,7 @@ fu! CustomFoldText()
 
   "strip foldmarkers
   let markexpr = escape(substitute(&foldmarker, ',', '|', 'g'),'{')
-  " TODO: check comment sing for filetype, add first line if comment
+  " TODO: check comment sign for filetype, add first line if comment
   let whitespace = '(\w\s*)?["|#]\s*|\s*$'
   let strip_line = substitute(line, '\v'.markexpr.'|'.whitespace, "", 'g')
   let strip_line = substitute(strip_line, '\v'.whitespace, "", 'g')
@@ -161,14 +187,17 @@ endf
 set foldtext=CustomFoldText()
 "}}}
 
+
+" ===================== Key Mappings =================
 " key mappings {{{
-nnoremap ; :|  " faster `commands` using ;
-vnoremap ; :|  " faster `commands` using ;
+nnoremap ; :|                       " faster `commands` using ;
+vnoremap ; :|                       " faster `commands` using ;
 
-nnoremap / /\v|  " use Python regular expressions
-vnoremap / /\v|  " use Python regular expressions
+nnoremap / /\v|                     " use Python regular expressions
+vnoremap / /\v|                     " use Python regular expressions
 
-
+nnoremap p p=`]<C-o>|               " Auto indent pasted text
+nnoremap P P=`]<C-o>|
 
 cnoremap w!! w !sudo tee % >/dev/null
 nmap Q <Nop>|  " Remove mapping for `Ex` mode
@@ -179,6 +208,7 @@ set pastetoggle=<F3>|  " toggle paste mode for pasting code without intend
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>|  " switch between header/source with F4
 map <C-n> :nohl<CR>|  " Remove highlight from search results
 
+" -------------------- Plugin Mappings ---------------
 " Plug-in mapping{{{
 nmap <leader>fe :VimFilerExplorer<CR>
 nmap <leader>ct <Plug>Colorizer
@@ -199,27 +229,27 @@ nmap \u [unite]
 nmap [unite] :Unite |
 nmap [unite]b :Unite -buffer-name=bookmark bookmark<cr>
 nmap [unite]/ :Unite -buffer-name=search line:forward -start-insert -no-quit -custom-line-enable-highlight<CR>
-nnoremap <silent> <C-p> :Unite -buffer-name=files -start-insert
+nnoremap <silent> <space>f :Unite -buffer-name=files -start-insert
       \ file_rec/async file_mru bookmark:!<cr>
 nnoremap <space>/ :Unite -buffer-name=grep -no-empty -no-resize grep<cr>
 nnoremap <space>s :Unite -buffer-name=buffers -quick-match buffer<cr>
 " }}}
 
 
-" Move between windows with Ctrl+[h,j,k,l]
-map <C-h> <C-w>h
+" -------------------- Window Movement ---------------
+map <C-h> <C-w>h|                     " move with <C-?>
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
-nnoremap c<C-j> :bel sp new<cr>
+nnoremap c<C-j> :bel sp new<cr>       " creat new split with c<C-?>
 nnoremap c<C-k> :abo sp new<cr>
 nnoremap c<C-h> :lefta vsp new<cr>
 nnoremap c<C-l> :rightb vsp new<cr>
 nnoremap g<C-j> <C-w>j:let &winheight = &lines * 7 / 10<cr>
 nnoremap g<C-k> <C-w>k:let &winheight = &lines * 7 / 10<cr>
-onoremap g<C-h> <C-w>h<C-w>_
+onoremap g<C-h> <C-w>h<C-w>_|         " move and focus (resize) with g<C-?>
 nnoremap g<C-l> <C-w>l<C-w>_
-nnoremap d<C-j> <C-w>j<C-w>c
+nnoremap d<C-j> <C-w>j<C-w>c|         " delete window with d<C-?>
 nnoremap d<C-k> <C-w>k<C-w>c
 nnoremap d<C-h> <C-w>h<C-w>c
 nnoremap d<C-l> <C-w>l<C-w>c
@@ -239,11 +269,6 @@ if has("autocmd")
         \| exe "normal! g'\"" | endif
 endif
 
-set diffopt+=vertical
-
-setl spell spelllang=en_us
-nmap <M-Down> ]s
-nmap <M-Up> [s
 
 if has("autocmd")
   au BufAdd,BufNewFile,BufRead * call s:diff_lang_settings()
@@ -369,7 +394,7 @@ map  <Leader><Leader>f <Plug>(easymotion-bd-f)
 nmap <Leader><Leader>f <Plug>(easymotion-overwin-f)
 
 map  <Leader><Leader>w <Plug>(easymotion-bd-w)
-nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
+" nmap <Leader><Leader>w <Plug>(easymotion-overwin-w)
 
 map  <Leader>/ <Plug>(easymotion-sn)
 omap <Leader>/ <Plug>(easymotion-tn)
@@ -404,45 +429,45 @@ let g:airline_powerline_fonts = 0
 let g:airline_detect_spell=0
 
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+  let g:airline_symbols = {}
 endif
 " unicode symbols
-  "let g:airline_left_sep = '»'
-  let g:airline_left_sep = '▶'
-  "let g:airline_right_sep = '«'
-  let g:airline_right_sep = '◀'
-  let g:airline_symbols.crypt = '🔒'
-  "let g:airline_symbols.linenr = '␊'
-  "let g:airline_symbols.linenr = '␤'
-  let g:airline_symbols.linenr = '¶'
-  let g:airline_symbols.maxlinenr = '☰'
-  "let g:airline_symbols.maxlinenr = ''
-  let g:airline_symbols.branch = '⎇'
-  "let g:airline_symbols.paste = 'ρ'
-  "let g:airline_symbols.paste = 'Þ'
-  "let g:airline_symbols.paste = '∥'
-  let g:airline_symbols.paste = 'PASTE'
-  let g:airline_symbols.spell = 'Ꞩ'
-  let g:airline_symbols.notexists = '∄'
-  let g:airline_symbols.whitespace = 'Ξ'
+"let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+"let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.crypt = '🔒'
+"let g:airline_symbols.linenr = '␊'
+"let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.maxlinenr = '☰'
+"let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.branch = '⎇'
+"let g:airline_symbols.paste = 'ρ'
+"let g:airline_symbols.paste = 'Þ'
+"let g:airline_symbols.paste = '∥'
+let g:airline_symbols.paste = 'PASTE'
+let g:airline_symbols.spell = 'Ꞩ'
+let g:airline_symbols.notexists = '∄'
+let g:airline_symbols.whitespace = 'Ξ'
 
-  "" powerline symbols
-  "let g:airline_left_sep = ''
-  let g:airline_left_alt_sep = ''
-  "let g:airline_right_sep = ''
-  let g:airline_right_alt_sep = ''
-  "let g:airline_symbols.branch = ''
-  "let g:airline_symbols.readonly = ''
-  "let g:airline_symbols.linenr = ''
+"" powerline symbols
+"let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+"let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+"let g:airline_symbols.branch = ''
+"let g:airline_symbols.readonly = ''
+"let g:airline_symbols.linenr = ''
 
-  "" old vim-powerline symbols
-  "let g:airline_left_sep = '⮀'
-  "let g:airline_left_alt_sep = '⮁'
-  "let g:airline_right_sep = '⮂'
-  "let g:airline_right_alt_sep = '⮃'
-  "let g:airline_symbols.branch = '⭠'
-  "let g:airline_symbols.readonly = '⭤'
-  "let g:airline_symbols.linenr = '⭡'
+"" old vim-powerline symbols
+"let g:airline_left_sep = '⮀'
+"let g:airline_left_alt_sep = '⮁'
+"let g:airline_right_sep = '⮂'
+"let g:airline_right_alt_sep = '⮃'
+"let g:airline_symbols.branch = '⭠'
+"let g:airline_symbols.readonly = '⭤'
+"let g:airline_symbols.linenr = '⭡'
 "}}}
 
 " TagBar{{{
@@ -482,37 +507,37 @@ let g:ipy_monitor_subchannel = 1
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
-  imap <buffer> <C-n>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+imap <buffer> <C-n>   <Plug>(unite_select_next_line)
+imap <buffer> <C-p>   <Plug>(unite_select_previous_line)
 
-  nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
-  nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
+nmap <buffer> <C-n>   <Plug>(unite_select_next_line)
+nmap <buffer> <C-p>   <Plug>(unite_select_previous_line)
 
-  nmap <silent><buffer><expr> Enter unite#do_action('switch')
-  nmap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
-  nmap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
-  nmap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
+nmap <silent><buffer><expr> Enter unite#do_action('switch')
+nmap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+nmap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
+nmap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
 
-  imap <silent><buffer><expr> Enter unite#do_action('switch')
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
-  imap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
-  imap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
+imap <silent><buffer><expr> Enter unite#do_action('switch')
+imap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+imap <silent><buffer><expr> <C-s> unite#do_action('splitswitch')
+imap <silent><buffer><expr> <C-v> unite#do_action('vsplitswitch')
 
-  nmap <buffer> <C-g> <Plug>(unite_toggle_auto_preview)
+nmap <buffer> <C-g> <Plug>(unite_toggle_auto_preview)
 
-  nmap <buffer> <ESC> :UniteClose<cr>
-  nnoremap <silent><buffer><expr> cd unite#do_action('lcd')
-  nmap <buffer> <C-z> <Plug>(unite_toggle_transpose_window)
-  nmap <buffer><silent> <c-r> <Plug>(unite_redraw)
+nmap <buffer> <ESC> :UniteClose<cr>
+nnoremap <silent><buffer><expr> cd unite#do_action('lcd')
+nmap <buffer> <C-z> <Plug>(unite_toggle_transpose_window)
+nmap <buffer><silent> <c-r> <Plug>(unite_redraw)
 endfunction
 
 if executable('ag') == 1
-  let g:unite_source_grep_command = 'ag'
-  let g:unite_source_rec_async_command =
-        \['ag', '--follow', '--nocolor', '--hidden', '-g', '']
-  let g:unite_source_grep_default_opts =
-        \ '-i --vimgrep --hidden --ignore ' .
-        \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
+let g:unite_source_grep_command = 'ag'
+let g:unite_source_rec_async_command =
+      \['ag', '--follow', '--nocolor', '--hidden', '-g', '']
+let g:unite_source_grep_default_opts =
+      \ '-i --vimgrep --hidden --ignore ' .
+      \ '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
 endif
 
 call unite#custom#profile('default', 'context', {
@@ -521,12 +546,12 @@ call unite#custom#profile('default', 'context', {
 call unite#custom#profile('outline', 'context', {'direction': 'topleft'})
 
 call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-      \ 'ignore_pattern', join([
-      \ '\.git/',
-      \ '__cache__/',
-      \ '\.undo',
-      \ '\.backup',
-      \ ], '\|'))
+    \ 'ignore_pattern', join([
+    \ '\.git/',
+    \ '__cache__/',
+    \ '\.undo',
+    \ '\.backup',
+    \ ], '\|'))
 call unite#custom#source('files,file,file/new,buffer,file_rec,file_rec/async,file_mru', 'matchers', 'matcher_fuzzy')
 
 "}}}
