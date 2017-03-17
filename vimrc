@@ -167,7 +167,7 @@ cnoremap w!! w !sudo tee % >/dev/null
 nmap Q <Nop>|  " Remove mapping for `Ex` mode
 
 nmap <F2> :w<CR>|  " in normal mode F2 will save the file
-imap <F2> <ESC>:w<CR>a|  " in insert mode F2 will exit insert, save, enters insert again
+imap <F2> <C-o>:w<CR>|  " in insert mode F2 will exit insert, save, enters insert again
 set pastetoggle=<F3>|  " toggle paste mode for pasting code without intend
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>|  " switch between header/source with F4
 map <C-n> :nohl<CR>|  " Remove highlight from search results
@@ -246,17 +246,17 @@ if has("autocmd")
   au BufAdd,BufNewFile,BufRead * call s:diff_lang_settings()
 endif
 function! s:diff_lang_settings() "{{{
-if &diff
-  nmap <M-Down> ]c
-  nmap <M-Up> [c
-  setl nospell
-elseif &readonly
-  setl nospell
-else
-  setl spell spelllang=en_us
-  nmap <M-Down> ]s
-  nmap <M-Up> [s
-endif
+  if &diff
+    nmap <M-Down> ]c
+    nmap <M-Up> [c
+    setl nospell
+  elseif &readonly || !&modifiable
+    setl nospell
+  else
+    setl spell spelllang=en_us
+    nmap <M-Down> ]s
+    nmap <M-Up> [s
+  endif
 endfunction "}}}
 
 " Convenient command to see the difference between the current buffer and the
@@ -270,7 +270,7 @@ endif
 set textwidth=0
 set linebreak  " Break line without break the word.
 
-let &showbreak='➣➣  \'
+let &showbreak='➣➣\'
 set formatoptions+=n
 set formatoptions+=2
 set formatoptions+=w
