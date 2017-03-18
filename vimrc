@@ -115,7 +115,8 @@ Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'henrik/vim-indexed-search'
 Plug 'vim-scripts/SearchComplete'
-Plug 'vim-scripts/TagHighlight'
+"Plug 'xolox/vim-easytags'| Plug 'xolox/vim-misc'
+Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -206,7 +207,7 @@ nmap <F2> :w<CR>|  " in normal mode F2 will save the file
 imap <F2> <C-o>:w<CR>|  " in insert mode F2 will exit insert, save, enters insert again
 set pastetoggle=<F3>|  " toggle paste mode for pasting code without intend
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>|  " switch between header/source with F4
-map <C-h> :nohl<CR>|  " Remove highlight from search results
+map <leader>h :nohl<CR>|  " Remove highlight from search results
 
 " -------------------- Plugin Mappings ---------------
 " Plug-in mapping{{{
@@ -225,7 +226,7 @@ nmap <C-w>f <C-w><Bar><C-w>_
 " generate unite prefix, nmap ? [unite] can use it then
 nmap <F1> :Unite -buffer-name=help -start-insert help<CR>
 nnoremap [unite] <Nop>
-nmap \u [unite]
+nmap <leader>u [unite]
 nmap [unite] :Unite |
 nmap [unite]b :Unite -buffer-name=bookmark bookmark<cr>
 nmap [unite]/ :Unite -buffer-name=search line:forward -start-insert -no-quit -custom-line-enable-highlight<CR>
