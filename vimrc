@@ -114,7 +114,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'henrik/vim-indexed-search'
-Plug 'vim-scripts/SearchComplete'
 "Plug 'xolox/vim-easytags'| Plug 'xolox/vim-misc'
 Plug 'ludovicchabant/vim-gutentags'
 
