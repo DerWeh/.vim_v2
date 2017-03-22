@@ -113,7 +113,8 @@ Plug 'Konfekt/FastFold'
 Plug 'scrooloose/nerdcommenter'
 Plug 'vim-scripts/TaskList.vim'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'henrik/vim-indexed-search'
+Plug 'google/vim-searchindex'
+"Plug 'DerWeh/SearchComplete'  " doesn't work with \v
 "Plug 'xolox/vim-easytags'| Plug 'xolox/vim-misc'
 Plug 'ludovicchabant/vim-gutentags'
 
