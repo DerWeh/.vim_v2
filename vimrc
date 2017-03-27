@@ -35,6 +35,10 @@ endif
 set undofile undodir=~/.vim/.undo//  " ending with `//` creates unique names
 
 
+" ================ Caps Lock ========================
+au VimEnter,FocusGained * :silent exec "!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'"
+au VimLeave,FocusLost * :silent exec "!xmodmap -e 'clear Lock' -e 'keycode 0x42 = Caps_Lock'"
+
 
 " ================ Indentation ======================
 set autoindent
@@ -68,8 +72,7 @@ set ttyfast
 let &colorcolumn="80,".join(range(120,999),",")
 
 
-" =============== Plug-in Management ==================
-" Plug-in management {{{
+" =============== Plug-in Management =================={{{
 call plug#begin('~/.vim/plugged')
 function! Cond(cond, ...)
   let opts = get(a:000, 0, {})
@@ -94,6 +97,11 @@ Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+
+
+" ------------------- rst -----------------------------
+Plug 'Rykka/riv.vim', {'for': 'rst'}
+Plug 'Rykka/InstantRst', {'for': 'rst', 'do': 'pip install https://github.com/Rykka/instant-rst.py/archive/master.zip --user'}
 
 " ------------------- Unite --------------------------
 Plug 'Shougo/unite.vim'
@@ -138,8 +146,7 @@ call plug#end()
 " }}}
 
 
-" ===================== Color Settings ===============
-" color settings{{{
+" ===================== Color Settings ==============={{{
 set t_Co=256                       " turn syntax highlighting on
 set background=light
 colorscheme PaperColor
@@ -155,8 +162,7 @@ set synmaxcol=800                  " Don't try to highlight lines longer than 80
 " }}}
 
 
-" ==================== Folding =======================
-" foldtext{{{
+" ==================== Folding ======================={{{
 set foldmethod=marker
 fu! CustomFoldText()
   "get first non-blank line
@@ -189,8 +195,7 @@ set foldtext=CustomFoldText()
 "}}}
 
 
-" ===================== Key Mappings =================
-" key mappings {{{
+" ===================== Key Mappings ================={{{
 nnoremap ; :|                       " faster `commands` using ;
 vnoremap ; :|                       " faster `commands` using ;
 
