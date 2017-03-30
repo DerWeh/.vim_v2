@@ -585,4 +585,8 @@ let g:space_no_character_movements = 1
 let g:tex_conceal= 'adgm'
 "}}}
 
+" Limelight {{{
+" let g:limelight_bop = '^\s*\n^\w'
+" let g:limelight_eop = '\ze\n^\s*\n^\w'
+"}}}
 "}}}
