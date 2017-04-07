@@ -98,11 +98,12 @@ Plug 'kevinw/pyflakes-vim', { 'for': 'python'}
 Plug 'heavenshell/vim-pydocstring', { 'for': 'python', 'on':  '<Plug>pydocstring'}
 Plug 'alfredodeza/pytest.vim', { 'for': 'python', 'on': 'Pytest'}
 Plug 'hynek/vim-python-pep8-indent', {'for': 'python'}
+Plug 'tmhedberg/SimpylFold', {'for': 'python'}
 
 
 " ------------------- rst -----------------------------
-Plug 'Rykka/riv.vim', {'for': 'rst'}
-Plug 'Rykka/InstantRst', {'for': 'rst', 'do': 'pip install https://github.com/Rykka/instant-rst.py/archive/master.zip --user'}
+Plug 'Rykka/riv.vim' ", {'for': ['rst', 'python']}
+Plug 'Rykka/InstantRst', {'on': 'InstantRst', 'do': 'pip install https://github.com/Rykka/instant-rst.py/archive/master.zip --user'}
 
 " ------------------- Unite --------------------------
 Plug 'Shougo/unite.vim'
@@ -126,6 +127,7 @@ Plug 'google/vim-searchindex'
 "Plug 'DerWeh/SearchComplete'  " doesn't work with \v
 "Plug 'xolox/vim-easytags'| Plug 'xolox/vim-misc'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'neomake/neomake'
 
 Plug 'easymotion/vim-easymotion'
 "Plug 'nathanaelkane/vim-indent-guides'
@@ -505,7 +507,7 @@ let g:vimwiki_table_mappings = 0
 
 "Ipython {{{
 let g:ipython_greedy_matching = 1
-let g:ipy_cell_folding = 1
+let g:ipy_cell_folding = 0
 let g:ipython_dictionary_completion = 1
 let g:ipy_monitor_subchannel = 1
 "}}}
@@ -589,4 +591,9 @@ let g:tex_conceal= 'adgm'
 " let g:limelight_bop = '^\s*\n^\w'
 " let g:limelight_eop = '\ze\n^\s*\n^\w'
 "}}}
+
+" Riv {{{
+let g:riv_python_rst_hl=1
+"}}}
+
 "}}}
